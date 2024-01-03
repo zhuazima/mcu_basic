@@ -15,23 +15,23 @@
 #include "app.h"
 
 
-Queue8 RFDRcvMsg;	//RFD½ÓÊÕ¶ÓÁĞ
-Queue8 DtcTriggerIDMsg;	//´¥·¢µÄÌ½²âÆ÷ID¶ÓÁĞ
+Queue8 RFDRcvMsg;	//RFDæ¥æ”¶é˜Ÿåˆ—
+Queue8 DtcTriggerIDMsg;	//è§¦å‘çš„æ¢æµ‹å™¨IDé˜Ÿåˆ—
 
 LINK_STATE_TYPEDEF link_state;
 
-stu_system_time stuSystemtime;		//ÏµÍ³Ê±¼ä
-stu_mode_menu *pModeMenu;		//ÏµÍ³µ±Ç°²Ëµ¥
-stu_system_mode *pStuSystemMode;		//µ±Ç°ÏµÍ³·ÀÓùÄ£Ê½
-unsigned char wifiWorkState,bwifiWorkState;	//WiFiÄ£×é¹¤×÷×´Ì¬
+stu_system_time stuSystemtime;		//ç³»ç»Ÿæ—¶é—´
+stu_mode_menu *pModeMenu;		//ç³»ç»Ÿå½“å‰èœå•
+stu_system_mode *pStuSystemMode;		//å½“å‰ç³»ç»Ÿé˜²å¾¡æ¨¡å¼
+unsigned char wifiWorkState,bwifiWorkState;	//WiFiæ¨¡ç»„å·¥ä½œçŠ¶æ€
 
 unsigned short SetupMenuTimeOutCnt;
 
-unsigned short PutoutScreenTiemr;		//¹ØÆÁÊ±¼ä
-unsigned char ScreenState;				//ÆÁÄ»×´Ì¬,0¹ØÆÁ£¬1¿ªÆÁ
+unsigned short PutoutScreenTiemr;		//å…³å±æ—¶é—´
+unsigned char ScreenState;				//å±å¹•çŠ¶æ€,0å…³å±ï¼Œ1å¼€å±
 
 
-unsigned char *pMcuVersions = "v2.8";		//ÕâÑù×ÓĞ´µÄ×Ö·û´®Ö»ÄÜ¸³Öµ¸øÖ¸Õë
+unsigned char *pMcuVersions = "v2.8";		//è¿™æ ·å­å†™çš„å­—ç¬¦ä¸²åªèƒ½èµ‹å€¼ç»™æŒ‡é’ˆ
 unsigned char *pHardVersions = "v2.0";
 
 
@@ -69,19 +69,19 @@ stu_system_mode stu_Sysmode[SYSTEM_MODE_SUM] =
 	{SYSTEM_MODE_ALARM,SCREEN_CMD_RESET,0xFF,S_AlarmModeProc},
 };
 
-//³õÊ¼»¯×ÀÃæ²Ëµ¥
+//åˆå§‹åŒ–æ¡Œé¢èœå•
 stu_mode_menu generalModeMenu[GNL_MENU_SUM] =
 {
 	{GNL_MENU_DESKTOP,DESKTOP_MENU_POS,"Desktop",gnlMenu_DesktopCBS,1,0,0xFF,0,0,0,0},
 	
 };	
 
-//³õÊ¼»¯ÉèÖÃ²Ëµ¥
+//åˆå§‹åŒ–è®¾ç½®èœå•
 stu_mode_menu settingModeMenu[STG_MENU_SUM] = 
 {
-	{STG_MENU_MAIN_SETTING,STG_MENU_POS,"Main Menu",stgMenu_MainMenuCBS,1,0,0xFF,0,0,0,0},		//ÉèÖÃÖ÷Ò³Ãæ
-	{STG_MENU_LEARNING_SENSOR,STG_SUB_2_MENU_POS,"1. Learning Dtc",stgMenu_LearnSensorCBS,1,0,0xFF,0,0,0,0},	//Ì½²âÆ÷Ñ§Ï°
-	{STG_MENU_DTC_LIST,STG_SUB_2_MENU_POS,"2. Dtc List",stgMenu_DTCListCBS,1,0,0xFF,0,0,0,0},			//·ÀÇø
+	{STG_MENU_MAIN_SETTING,STG_MENU_POS,"Main Menu",stgMenu_MainMenuCBS,1,0,0xFF,0,0,0,0},		//è®¾ç½®ä¸»é¡µé¢
+	{STG_MENU_LEARNING_SENSOR,STG_SUB_2_MENU_POS,"1. Learning Dtc",stgMenu_LearnSensorCBS,1,0,0xFF,0,0,0,0},	//æ¢æµ‹å™¨å­¦ä¹ 
+	{STG_MENU_DTC_LIST,STG_SUB_2_MENU_POS,"2. Dtc List",stgMenu_DTCListCBS,1,0,0xFF,0,0,0,0},			//é˜²åŒº
 
 
 	{STG_MENU_WIFI,STG_WIFI_MENU_POS,"3. WiFi",stgMenu_WifiCBS,1,0,0xFF,0,0,0,0},
@@ -178,25 +178,25 @@ static void showSystemTime(void)
 	//hal_Oled_Refresh();
 	switch(stuSystemtime.week)
 	{
-		case 1:	//ĞÇÆÚ1
+		case 1:	//æ˜ŸæœŸ1
 			hal_Oled_ShowString(106,54,"Mon",8,1);
 		break;
-		case 2:	//ĞÇÆÚ2
+		case 2:	//æ˜ŸæœŸ2
 			hal_Oled_ShowString(106,54,"Tue",8,1);
 		break;
-		case 3:	//ĞÇÆÚ3
+		case 3:	//æ˜ŸæœŸ3
 			hal_Oled_ShowString(106,54,"Wed",8,1);
 		break;
-		case 4:	//ĞÇÆÚ4
+		case 4:	//æ˜ŸæœŸ4
 			hal_Oled_ShowString(106,54,"Thu",8,1);
 		break;
-		case 5:	//ĞÇÆÚ5
+		case 5:	//æ˜ŸæœŸ5
 			hal_Oled_ShowString(106,54,"Fir",8,1);
 		break;
-		case 6:	//ĞÇÆÚ6
+		case 6:	//æ˜ŸæœŸ6
 			hal_Oled_ShowString(106,54,"Sat",8,1);
 		break;
-		case 7:	//ĞÇÆÚ7
+		case 7:	//æ˜ŸæœŸ7
 			hal_Oled_ShowString(106,54,"Sun",8,1);
 		break;
 		
@@ -218,8 +218,8 @@ void AppProc(void)
 		if(SetupMenuTimeOutCnt > SETUPMENU_TIMEOUT_PERIOD)
 		{
 			SetupMenuTimeOutCnt = 0;
-			pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];	//ÉèÖÃÉÏµçÏÔÊ¾µÄ²Ëµ¥½çÃæÎª×ÀÃæÏÔÊ¾
-			pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;	//¸üĞÂË¢ĞÂ½çÃæ±êÖ¾£¬½øÈë½çÃæºóË¢ĞÂÈ«½çÃæUI
+			pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];	//è®¾ç½®ä¸Šç”µæ˜¾ç¤ºçš„èœå•ç•Œé¢ä¸ºæ¡Œé¢æ˜¾ç¤º
+			pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;	//æ›´æ–°åˆ·æ–°ç•Œé¢æ ‡å¿—ï¼Œè¿›å…¥ç•Œé¢ååˆ·æ–°å…¨ç•Œé¢UI
 
 		}
 	}
@@ -232,7 +232,7 @@ void AppProc(void)
 		{
 			PutoutScreenTiemr = 0;
 			
-			//30ÃëÃ»ÈÎºÎ²Ù×÷×Ô¶¯Ï¨ÆÁ
+			//30ç§’æ²¡ä»»ä½•æ“ä½œè‡ªåŠ¨ç†„å±
 			ScreeControl(0);
 			 
 		}
@@ -262,7 +262,7 @@ void Menu_Init(void)
 {
 
 	unsigned char i;
-	//Ö÷ÉèÖÃ²Ëµ¥³õÊ¼»¯,°Ñ²Ëµ¥ÁĞ±íĞÎ³ÉÁ´±íĞÎÊ½£¬·½±ãµ÷ÓÃ
+	//ä¸»è®¾ç½®èœå•åˆå§‹åŒ–,æŠŠèœå•åˆ—è¡¨å½¢æˆé“¾è¡¨å½¢å¼ï¼Œæ–¹ä¾¿è°ƒç”¨
 	settingModeMenu[1].pLase = &settingModeMenu[STG_MENU_SUM-1];
 	settingModeMenu[1].pNext = &settingModeMenu[2];
 	settingModeMenu[1].pParent = &settingModeMenu[STG_MENU_MAIN_SETTING];
@@ -292,22 +292,22 @@ void Menu_Init(void)
 	DL_ZX_Review[STG_MENU_DL_ZX_SUM-1].pParent = &DL_ZX_Review[STG_MENU_DL_ZX_REVIEW_MAIN];
 	
 
-	pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];	//ÉèÖÃÉÏµçÏÔÊ¾µÄ²Ëµ¥½çÃæÎª×ÀÃæÏÔÊ¾
-	pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;	//¸üĞÂË¢ĞÂ½çÃæ±êÖ¾£¬½øÈë½çÃæºóË¢ĞÂÈ«½çÃæUI
+	pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];	//è®¾ç½®ä¸Šç”µæ˜¾ç¤ºçš„èœå•ç•Œé¢ä¸ºæ¡Œé¢æ˜¾ç¤º
+	pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;	//æ›´æ–°åˆ·æ–°ç•Œé¢æ ‡å¿—ï¼Œè¿›å…¥ç•Œé¢ååˆ·æ–°å…¨ç•Œé¢UI
 
 }
 
-//ÇĞ»»ÏµÍ³·ÀÓùÄ£Ê½
+//åˆ‡æ¢ç³»ç»Ÿé˜²å¾¡æ¨¡å¼
 static void SystemMode_Change(SYSTEMMODE_TYPEDEF sysMode)
 {
-	if(sysMode < SYSTEM_MODE_SUM)	//´«ÈëµÄĞÎ²Î(Ä£Ê½)ÊÇ·ñÕıÈ·
+	if(sysMode < SYSTEM_MODE_SUM)	//ä¼ å…¥çš„å½¢å‚(æ¨¡å¼)æ˜¯å¦æ­£ç¡®
 	{
 		ScreeControl(1);
 		PutoutScreenTiemr = 0;
 		pStuSystemMode = &stu_Sysmode[sysMode];
 		pStuSystemMode->refreshScreenCmd = SCREEN_CMD_RESET;
 
-		mcu_dp_enum_update(DPID_MASTER_MODE,sysMode,STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //ÉÏ±¨Ö÷»úÄ£Ê½
+		mcu_dp_enum_update(DPID_MASTER_MODE,sysMode,STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //ä¸ŠæŠ¥ä¸»æœºæ¨¡å¼
 		
 		if(sysMode == SYSTEM_MODE_ALARM)
 		{
@@ -324,7 +324,7 @@ static void SystemMode_Change(SYSTEMMODE_TYPEDEF sysMode)
 	}
 }
 
-//Àë¼Ò²¼·ÀÄ£Ê½´¦Àí
+//ç¦»å®¶å¸ƒé˜²æ¨¡å¼å¤„ç†
 static void S_ENArmModeProc(void)
 {
 	unsigned char tBuff[3],id,dat;
@@ -335,8 +335,8 @@ static void S_ENArmModeProc(void)
 		pStuSystemMode->keyVal = 0xFF;
 		
 	 
-		hal_Oled_ClearArea(0,20,128,24);		//Çå·ÀÓùÄ£Ê½ÎÄ°¸
-		hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+		hal_Oled_ClearArea(0,20,128,24);		//æ¸…é˜²å¾¡æ¨¡å¼æ–‡æ¡ˆ
+		hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 		hal_Oled_ShowString(16,20,"Away arm",24,1);
 		 
 		hal_Oled_Refresh();
@@ -348,39 +348,39 @@ static void S_ENArmModeProc(void)
 		QueueDataOut(RFDRcvMsg,&dat);
 		if(dat == '#')
 		{
-			QueueDataOut(RFDRcvMsg,&tBuff[2]);	//µØÖ·Âë¸ß8Î»
-			QueueDataOut(RFDRcvMsg,&tBuff[1]);	//µØÖ·ÂëµÍ8Î»
-			QueueDataOut(RFDRcvMsg,&tBuff[0]);	//Êı¾İÂë/¹¦ÄÜÂë
-			//EV1527±àÂë·½Ê½:1111 0000,¸ß4Î»1111ÊÇµØÖ·£¬0000Êı¾İÂë/¹¦ÄÜÂë
-			//2262±àÂë·½Ê½£º1111 0000¶¼ÊÇÊı¾İÂë/¹¦ÄÜÂë
-			id = DtcMatching(tBuff);		//Ì½²âÆ÷Æ¥Åä
+			QueueDataOut(RFDRcvMsg,&tBuff[2]);	//åœ°å€ç é«˜8ä½
+			QueueDataOut(RFDRcvMsg,&tBuff[1]);	//åœ°å€ç ä½8ä½
+			QueueDataOut(RFDRcvMsg,&tBuff[0]);	//æ•°æ®ç /åŠŸèƒ½ç 
+			//EV1527ç¼–ç æ–¹å¼:1111 0000,é«˜4ä½1111æ˜¯åœ°å€ï¼Œ0000æ•°æ®ç /åŠŸèƒ½ç 
+			//2262ç¼–ç æ–¹å¼ï¼š1111 0000éƒ½æ˜¯æ•°æ®ç /åŠŸèƒ½ç 
+			id = DtcMatching(tBuff);		//æ¢æµ‹å™¨åŒ¹é…
 			if(id != 0xFF)
 			{
-				//Æ¥Åäµ½Ì½²âÆ÷
+				//åŒ¹é…åˆ°æ¢æµ‹å™¨
 				GetDtcStu(&tStuDtc,id-1);
 				if(tStuDtc.DTCType == DTC_REMOTE)
 				{
 					if(tBuff[0] == SENSOR_CODE_REMOTE_DISARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_DISARM);	//Ò£¿ØÆ÷¿ØÖÆ³··À
+						SystemMode_Change(SYSTEM_MODE_DISARM);	//é¥æ§å™¨æ§åˆ¶æ’¤é˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_HOMEARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//Ò£¿ØÆ÷¿ØÖÆÔÚ¼Ò²¼·À
+						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//é¥æ§å™¨æ§åˆ¶åœ¨å®¶å¸ƒé˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_SOS)
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ò£¿ØÆ÷´¥·¢SOS±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//é¥æ§å™¨è§¦å‘SOSæŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1); 
 					}
 					else if(tBuff[0] == SENSOR_CODE_REMOTE_ENARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_ENARM);	//Ò£¿ØÆ÷¿ØÖÆ³··À
+						SystemMode_Change(SYSTEM_MODE_ENARM);	//é¥æ§å™¨æ§åˆ¶æ’¤é˜²
 					}
 				}if(tBuff[0]==SENSOR_CODE_DOOR_OPEN)	//((tBuff[0]==0x0A)	
 				{
 					SystemMode_Change(SYSTEM_MODE_ALARM);
 					QueueDataIn(DtcTriggerIDMsg, &id, 1);
-					//ÇĞ»»µ½Alarming(±¨¾¯ÖĞ)
-					//SystemMode_Change(SYSTEM_MODE_ALARM);	//Ì½²âÆ÷´¥·¢±¨¾¯
+					//åˆ‡æ¢åˆ°Alarming(æŠ¥è­¦ä¸­)
+					//SystemMode_Change(SYSTEM_MODE_ALARM);	//æ¢æµ‹å™¨è§¦å‘æŠ¥è­¦
 				
 				}
 			}
@@ -399,8 +399,8 @@ static void S_HomeArmModeProc(void)
 		pStuSystemMode->keyVal = 0xFF;
 		
 		 
-		hal_Oled_ClearArea(0,20,128,24);		//Çå·ÀÓùÄ£Ê½ÎÄ°¸
-		hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+		hal_Oled_ClearArea(0,20,128,24);		//æ¸…é˜²å¾¡æ¨¡å¼æ–‡æ¡ˆ
+		hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 		hal_Oled_ShowString(16,20,"Home Arm",24,1);
 		 
 		hal_Oled_Refresh();
@@ -414,26 +414,26 @@ static void S_HomeArmModeProc(void)
 			QueueDataOut(RFDRcvMsg,&tBuff[2]);
 			QueueDataOut(RFDRcvMsg,&tBuff[1]);
 			QueueDataOut(RFDRcvMsg,&tBuff[0]);
-			id = DtcMatching(tBuff);		//Ì½²âÆ÷Æ¥Åä
+			id = DtcMatching(tBuff);		//æ¢æµ‹å™¨åŒ¹é…
 			if(id != 0xFF)
 			{
-				//Æ¥Åäµ½Ì½²âÆ÷
+				//åŒ¹é…åˆ°æ¢æµ‹å™¨
 				GetDtcStu(&tStuDtc,id-1);
 				 
 				if(tStuDtc.DTCType == DTC_REMOTE)
 				{
 					if(tBuff[0] == SENSOR_CODE_REMOTE_ENARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_ENARM);	//Ò£¿ØÆ÷¿ØÖÆÀë¼Ò²¼·À
+						SystemMode_Change(SYSTEM_MODE_ENARM);	//é¥æ§å™¨æ§åˆ¶ç¦»å®¶å¸ƒé˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_DISARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_DISARM);	//Ò£¿ØÆ÷¿ØÖÆ³··À
+						SystemMode_Change(SYSTEM_MODE_DISARM);	//é¥æ§å™¨æ§åˆ¶æ’¤é˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_HOMEARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//Ò£¿ØÆ÷¿ØÖÆÔÚ¼Ò²¼·À
+						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//é¥æ§å™¨æ§åˆ¶åœ¨å®¶å¸ƒé˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_SOS)
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ò£¿ØÆ÷´¥·¢SOS±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//é¥æ§å™¨è§¦å‘SOSæŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
 					}
 				}else if((tBuff[0]==SENSOR_CODE_DOOR_OPEN)
@@ -443,11 +443,11 @@ static void S_HomeArmModeProc(void)
 				{
 					if(tStuDtc.ZoneType==ZONE_TYP_24HOURS)
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ì½²âÆ÷´¥·¢½ô¼±±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//æ¢æµ‹å™¨è§¦å‘ç´§æ€¥æŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
-					}else if(tStuDtc.ZoneType != ZONE_TYP_2ND)	//ÅĞ¶ÏÌ½²âÆ÷ÊÇ·ñ·ÇÎªÔÚ¼Ò·ÀÓùÄ£Ê½
+					}else if(tStuDtc.ZoneType != ZONE_TYP_2ND)	//åˆ¤æ–­æ¢æµ‹å™¨æ˜¯å¦éä¸ºåœ¨å®¶é˜²å¾¡æ¨¡å¼
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ì½²âÆ÷´¥·¢½ô¼±±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//æ¢æµ‹å™¨è§¦å‘ç´§æ€¥æŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
 					}
 				}
@@ -470,8 +470,8 @@ static void S_DisArmModeProc(void)
 		pStuSystemMode->keyVal = 0xFF;
 		
 		 
-		hal_Oled_ClearArea(0,20,128,24);		//Çå·ÀÓùÄ£Ê½ÎÄ°¸
-		hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+		hal_Oled_ClearArea(0,20,128,24);		//æ¸…é˜²å¾¡æ¨¡å¼æ–‡æ¡ˆ
+		hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 		hal_Oled_ShowString(28,20,"Disarm",24,1);
 		 
 		hal_Oled_Refresh();
@@ -485,26 +485,26 @@ static void S_DisArmModeProc(void)
 			QueueDataOut(RFDRcvMsg,&tBuff[2]);
 			QueueDataOut(RFDRcvMsg,&tBuff[1]);
 			QueueDataOut(RFDRcvMsg,&tBuff[0]);
-			id = DtcMatching(tBuff);		//Ì½²âÆ÷Æ¥Åä
+			id = DtcMatching(tBuff);		//æ¢æµ‹å™¨åŒ¹é…
 			if(id != 0xFF)
 			{
-				//Æ¥Åäµ½Ì½²âÆ÷
+				//åŒ¹é…åˆ°æ¢æµ‹å™¨
 				GetDtcStu(&tStuDtc,id-1);
 				 
 				if(tStuDtc.DTCType == DTC_REMOTE)
 				{
 					if(tBuff[0] == SENSOR_CODE_REMOTE_ENARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_ENARM);	//Ò£¿ØÆ÷¿ØÖÆÀë¼Ò²¼·À
+						SystemMode_Change(SYSTEM_MODE_ENARM);	//é¥æ§å™¨æ§åˆ¶ç¦»å®¶å¸ƒé˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_DISARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_DISARM);	//Ò£¿ØÆ÷¿ØÖÆ³··À
+						SystemMode_Change(SYSTEM_MODE_DISARM);	//é¥æ§å™¨æ§åˆ¶æ’¤é˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_HOMEARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//Ò£¿ØÆ÷¿ØÖÆÔÚ¼Ò²¼·À
+						SystemMode_Change(SYSTEM_MODE_HOMEARM);	//é¥æ§å™¨æ§åˆ¶åœ¨å®¶å¸ƒé˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_SOS)
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ò£¿ØÆ÷´¥·¢SOS±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//é¥æ§å™¨è§¦å‘SOSæŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
 					}
 				}else if((tBuff[0]==SENSOR_CODE_DOOR_OPEN)
@@ -514,7 +514,7 @@ static void S_DisArmModeProc(void)
 				{
 					if(tStuDtc.ZoneType==ZONE_TYP_24HOURS)
 					{
-						SystemMode_Change(SYSTEM_MODE_ALARM);	//Ì½²âÆ÷´¥·¢½ô¼±±¨¾¯
+						SystemMode_Change(SYSTEM_MODE_ALARM);	//æ¢æµ‹å™¨è§¦å‘ç´§æ€¥æŠ¥è­¦
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
 					} 
 				}
@@ -538,8 +538,8 @@ static void S_AlarmModeProc(void)
 		pStuSystemMode->refreshScreenCmd = SCREEN_CMD_NULL;
 		pStuSystemMode->keyVal = 0xFF;
 		
-		hal_Oled_ClearArea(0,20,128,24);		//Çå·ÀÓùÄ£Ê½ÎÄ°¸
-		hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+		hal_Oled_ClearArea(0,20,128,24);		//æ¸…é˜²å¾¡æ¨¡å¼æ–‡æ¡ˆ
+		hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 		hal_Oled_ShowString(16,20,"Alarming",24,1);
 		 
 		hal_Oled_Refresh();
@@ -556,17 +556,17 @@ static void S_AlarmModeProc(void)
 			QueueDataOut(RFDRcvMsg,&tBuff[2]);
 			QueueDataOut(RFDRcvMsg,&tBuff[1]);
 			QueueDataOut(RFDRcvMsg,&tBuff[0]);
-			id = DtcMatching(tBuff);		//Ì½²âÆ÷Æ¥Åä
+			id = DtcMatching(tBuff);		//æ¢æµ‹å™¨åŒ¹é…
 			if(id != 0xFF)
 			{
-				//Æ¥Åäµ½Ì½²âÆ÷
+				//åŒ¹é…åˆ°æ¢æµ‹å™¨
 				GetDtcStu(&tStuDtc,id-1);
 				
 				if(tStuDtc.DTCType == DTC_REMOTE)
 				{
 					if(tBuff[0] == SENSOR_CODE_REMOTE_DISARM)
 					{
-						SystemMode_Change(SYSTEM_MODE_DISARM);	//Ò£¿ØÆ÷¿ØÖÆ³··À
+						SystemMode_Change(SYSTEM_MODE_DISARM);	//é¥æ§å™¨æ§åˆ¶æ’¤é˜²
 					}else if(tBuff[0] == SENSOR_CODE_REMOTE_SOS)
 					{
 						QueueDataIn(DtcTriggerIDMsg, &id, 1);
@@ -574,7 +574,7 @@ static void S_AlarmModeProc(void)
 				}else if((tBuff[0]==SENSOR_CODE_DOOR_OPEN)
 				|| (tBuff[0]==SENSOR_CODE_DOOR_TAMPER)
 				|| (tBuff[0]==SENSOR_CODE_PIR)
-				|| (tBuff[0]==SENSOR_CODE_PIR_TAMPER))						//¾¯½äÄ£Ê½ÏÂ£¬·ÀÓùµÈ¼¶×î¸ß£¬ËùÓĞÌ½²âÆ÷´¥·¢¶¼±¨¾¯
+				|| (tBuff[0]==SENSOR_CODE_PIR_TAMPER))						//è­¦æˆ’æ¨¡å¼ä¸‹ï¼Œé˜²å¾¡ç­‰çº§æœ€é«˜ï¼Œæ‰€æœ‰æ¢æµ‹å™¨è§¦å‘éƒ½æŠ¥è­¦
 				{
 					QueueDataIn(DtcTriggerIDMsg, &id, 1);
 				} 	
@@ -592,19 +592,19 @@ static void S_AlarmModeProc(void)
 			if(tStuDtc.DTCType == DTC_REMOTE)
 			{
 				//Remote:sos
-				hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+				hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 				hal_Oled_ShowString(34,12,"Remote:",8,1);
 				hal_Oled_ShowString(76,12,"sos",8,1);
-				mcu_dp_string_update(DPID_ALARM_ACTIVE,"Remote:sos",sizeof("Remote:sos"),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGĞÍÊı¾İÉÏ±¨;	
+				mcu_dp_string_update(DPID_ALARM_ACTIVE,"Remote:sos",sizeof("Remote:sos"),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGå‹æ•°æ®ä¸ŠæŠ¥;	
 					
 			}
 			else if(tStuDtc.DTCType == DTC_DOOR)
 			{
 			//Door:Zone-001
-				hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+				hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 				hal_Oled_ShowString(25,12,"Door:",8,1);
 				hal_Oled_ShowString(55,12,tStuDtc.Name,8,1);	
-				mcu_dp_string_update(DPID_ALARM_ACTIVE,tStuDtc.Name,sizeof(tStuDtc.Name),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGĞÍÊı¾İÉÏ±¨
+				mcu_dp_string_update(DPID_ALARM_ACTIVE,tStuDtc.Name,sizeof(tStuDtc.Name),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGå‹æ•°æ®ä¸ŠæŠ¥
 			}
 			
 			hal_Oled_Refresh();
@@ -618,7 +618,7 @@ static void S_AlarmModeProc(void)
 		if(timer > 500)	//500*10ms=5000ms=5s
 		{
 			timer = 0;
-			hal_Oled_ClearArea(0,12,128,8);		//Çå±¨¾¯Ì½²âÆ÷ÎÄ°¸
+			hal_Oled_ClearArea(0,12,128,8);		//æ¸…æŠ¥è­¦æ¢æµ‹å™¨æ–‡æ¡ˆ
 			hal_Oled_Refresh();
 		}
 	}
@@ -631,13 +631,13 @@ static void S_AlarmModeProc(void)
 		
 		 if(displayAlarmFlag)
 		 {
-			 //Ë¢ÆÁ¾¡Á¿²»ÒªÌ«¿ì£¬ÏÂÃæÁ½¸öº¯Êıµ÷ÓÃĞèÒª´óÔ¼20msÊ±¼ä
+			 //åˆ·å±å°½é‡ä¸è¦å¤ªå¿«ï¼Œä¸‹é¢ä¸¤ä¸ªå‡½æ•°è°ƒç”¨éœ€è¦å¤§çº¦20msæ—¶é—´
 			 hal_Oled_ShowString(16,20,"Alarming",24,1);	
 			 hal_Oled_Refresh();				
 			 
 		 }else
 		 {
-			 hal_Oled_ClearArea(0,20,128,24);		//Çå·ÀÓùÄ£Ê½ÎÄ°¸
+			 hal_Oled_ClearArea(0,20,128,24);		//æ¸…é˜²å¾¡æ¨¡å¼æ–‡æ¡ˆ
 			 hal_Oled_Refresh();
 		 }
 	}
@@ -676,14 +676,14 @@ static void gnlMenu_DesktopCBS(void)
 		{
 			timer = 0;
 		
-			get_wifi_st();	//·¢ËÍ»ñÈ¡Ä£×éÁ¬½Ó×´Ì¬Ö¸Áî
+			get_wifi_st();	//å‘é€è·å–æ¨¡ç»„è¿æ¥çŠ¶æ€æŒ‡ä»¤
 		
 		}	
 
-		if((timer%200)==0)	//2Ãë»ñÈ¡Ê±¼ä
+		if((timer%200)==0)	//2ç§’è·å–æ—¶é—´
 		{
-			mcu_get_system_time();	//Ã¿2Ãë»ñÈ¡Ò»´ÎÏµÍ³Ê±¼ä
-			showSystemTime();		//ÕâÀïĞèÒªºÄ·Ñ¼¸Ê®ms
+			mcu_get_system_time();	//æ¯2ç§’è·å–ä¸€æ¬¡ç³»ç»Ÿæ—¶é—´
+			showSystemTime();		//è¿™é‡Œéœ€è¦è€—è´¹å‡ åms
 		}
 
 	}else
@@ -692,7 +692,7 @@ static void gnlMenu_DesktopCBS(void)
 		{
 			timer = 0;
 		
-			get_wifi_st();	//·¢ËÍ»ñÈ¡Ä£×éÁ¬½Ó×´Ì¬Ö¸Áî
+			get_wifi_st();	//å‘é€è·å–æ¨¡ç»„è¿æ¥çŠ¶æ€æŒ‡ä»¤
 		
 		}
 	}
@@ -701,25 +701,25 @@ static void gnlMenu_DesktopCBS(void)
 		bwifiWorkState = wifiWorkState;
 		switch(wifiWorkState)
 		{
-			case SMART_CONFIG_STATE:		//½øÈësmartlinkÅäÍø×´Ì¬
+			case SMART_CONFIG_STATE:		//è¿›å…¥smartlinké…ç½‘çŠ¶æ€
 				
 				hal_Oled_ShowString(0,0,"N",8,1);
 				LedMsgInput(LED1,LED_BLINK1,1);
 				hal_Oled_Refresh();
 			break;	
 			
-			case WIFI_NOT_CONNECTED:		//WIFIÅäÖÃ³É¹¦µ«Î´Á¬ÉÏÂ·ÓÉÆ÷
+			case WIFI_NOT_CONNECTED:		//WIFIé…ç½®æˆåŠŸä½†æœªè¿ä¸Šè·¯ç”±å™¨
 				hal_Oled_ShowString(0,0,"W",8,1);
 				LedMsgInput(LED1,LED_BLINK3,1);
 				hal_Oled_Refresh();
 			break;
-			case WIFI_CONNECTED:			//WIFIÅäÖÃ³É¹¦ÇÒÁ¬ÉÏÂ·ÓÉÆ÷
+			case WIFI_CONNECTED:			//WIFIé…ç½®æˆåŠŸä¸”è¿ä¸Šè·¯ç”±å™¨
 				hal_Oled_ShowString(0,0,"R",8,1);
 				LedMsgInput(LED1,LED_BLINK4,1);
 				hal_Oled_Refresh();
 			break;
 			
-			case WIFI_CONN_CLOUD: 			//WIFIÒÑ¾­Á¬½ÓÉÏÔÆ·şÎñÆ÷
+			case WIFI_CONN_CLOUD: 			//WIFIå·²ç»è¿æ¥ä¸Šäº‘æœåŠ¡å™¨
 				hal_Oled_ShowString(0,0,"S",8,1);
 				LedMsgInput(LED1,LED_LIGHT,1);
 				hal_Oled_Refresh();
@@ -732,7 +732,7 @@ static void gnlMenu_DesktopCBS(void)
 	{
 		keys = pModeMenu->keyVal;
 		 
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
 			case KEY6_LONG_PRESS:
@@ -741,7 +741,7 @@ static void gnlMenu_DesktopCBS(void)
 			break;
 		}
 	}
-	pStuSystemMode->action(); //=S_ENArmModeProc();//Ö´ĞĞÏµÍ³·ÀÏßÄ£Ê½
+	pStuSystemMode->action(); //=S_ENArmModeProc();//æ‰§è¡Œç³»ç»Ÿé˜²çº¿æ¨¡å¼
 
 
 	
@@ -749,16 +749,16 @@ static void gnlMenu_DesktopCBS(void)
 }
 
 
-//ÉèÖÃÖ÷²Ëµ¥
+//è®¾ç½®ä¸»èœå•
 static void stgMenu_MainMenuCBS(void)
 {
 	unsigned char keys;
 	unsigned char i;
 	unsigned char ClrScreenFlag;
-	static stu_mode_menu *pMenu;		//ÓÃÀ´±£´æµ±Ç°Ñ¡ÖĞµÄ²Ëµ¥
-	static stu_mode_menu *bpMenu=0;		//ÓÃÀ´±¸·İÉÏÒ»´Î²Ëµ¥Ñ¡Ïî£¬Ö÷ÒªÓÃÓÚË¢ÆÁÅĞ¶Ï
-	static unsigned char stgMainMenuSelectedPos=0;	//ÓÃÀ´¼ÇÂ¼µ±Ç°Ñ¡ÖĞ²Ëµ¥µÄÎ»ÖÃ
-	static stu_mode_menu *MHead,*MTail;		//ÕâÁ½¸ö½á¹¹ÌåÖ¸ÕëÊÇÎªÁËÉÏÏÂÇĞ»»²Ëµ¥Ê±×ö·­Ò³´¦Àí
+	static stu_mode_menu *pMenu;		//ç”¨æ¥ä¿å­˜å½“å‰é€‰ä¸­çš„èœå•
+	static stu_mode_menu *bpMenu=0;		//ç”¨æ¥å¤‡ä»½ä¸Šä¸€æ¬¡èœå•é€‰é¡¹ï¼Œä¸»è¦ç”¨äºåˆ·å±åˆ¤æ–­
+	static unsigned char stgMainMenuSelectedPos=0;	//ç”¨æ¥è®°å½•å½“å‰é€‰ä¸­èœå•çš„ä½ç½®
+	static stu_mode_menu *MHead,*MTail;		//è¿™ä¸¤ä¸ªç»“æ„ä½“æŒ‡é’ˆæ˜¯ä¸ºäº†ä¸Šä¸‹åˆ‡æ¢èœå•æ—¶åšç¿»é¡µå¤„ç†
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
 	{
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
@@ -771,8 +771,8 @@ static void stgMenu_MainMenuCBS(void)
 		
 		pMenu = &settingModeMenu[1];
 		
-		MHead = pMenu;			//¼ÇÂ¼µ±Ç°ÏÔÊ¾²Ëµ¥µÚÒ»Ïî
-		MTail = pMenu+3;		//¼ÇÂ¼µ±Ç°ÏÔÊ¾²Ëµ¥×îºóÒ»Ïî,Ò»Ò³ÏÔÊ¾4ĞĞ		
+		MHead = pMenu;			//è®°å½•å½“å‰æ˜¾ç¤ºèœå•ç¬¬ä¸€é¡¹
+		MTail = pMenu+3;		//è®°å½•å½“å‰æ˜¾ç¤ºèœå•æœ€åä¸€é¡¹,ä¸€é¡µæ˜¾ç¤º4è¡Œ		
 		bpMenu = 0;
  
 		ClrScreenFlag = 1;
@@ -783,7 +783,7 @@ static void stgMenu_MainMenuCBS(void)
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RECOVER)
 	{
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
-		//»Ö¸´Ö®Ç°µÄÑ¡ÔñÎ»ÖÃÏÔÊ¾
+		//æ¢å¤ä¹‹å‰çš„é€‰æ‹©ä½ç½®æ˜¾ç¤º
 		hal_Oled_Clear();
 		
 		hal_Oled_ShowString(37,0,settingModeMenu[0].pModeType,12,1);
@@ -795,10 +795,10 @@ static void stgMenu_MainMenuCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
-			case KEY1_CLICK:		//ÉÏ
+			case KEY1_CLICK:		//ä¸Š
 				
 				if(stgMainMenuSelectedPos ==1)
 				{
@@ -809,13 +809,13 @@ static void stgMenu_MainMenuCBS(void)
 					ClrScreenFlag = 1;
 				}else
 				{
-					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 					hal_Oled_Refresh();
 					pMenu = pMenu->pLase;
 					stgMainMenuSelectedPos--;
 				}
 			break;
-			case KEY2_CLICK:		//ÏÂ
+			case KEY2_CLICK:		//ä¸‹
 				if(stgMainMenuSelectedPos ==4)
 				{
 					MHead = MHead->pNext;	
@@ -825,21 +825,21 @@ static void stgMenu_MainMenuCBS(void)
 					ClrScreenFlag = 1;
 				}else
 				{
-					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 					hal_Oled_Refresh();
-					pMenu = pMenu->pNext;																			//ÇĞ»»ÏÂÒ»¸öÑ¡Ïî
+					pMenu = pMenu->pNext;																			//åˆ‡æ¢ä¸‹ä¸€ä¸ªé€‰é¡¹
 					stgMainMenuSelectedPos++;
 				}
 
 			break;
 			
-			case KEY5_CLICK_RELEASE:	//È¡Ïû
+			case KEY5_CLICK_RELEASE:	//å–æ¶ˆ
 				pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 			break;
 
 
-			case KEY6_CLICK_RELEASE:	//È·¶¨
+			case KEY6_CLICK_RELEASE:	//ç¡®å®š
 				pModeMenu->pChild = pMenu;
 				pModeMenu = pModeMenu->pChild;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
@@ -847,7 +847,7 @@ static void stgMenu_MainMenuCBS(void)
 			
 		}
 	}
-	if(bpMenu != pMenu)		//Ñ¡ÖĞ²Ëµ¥µÄ¼ÇÂ¼
+	if(bpMenu != pMenu)		//é€‰ä¸­èœå•çš„è®°å½•
 	{
 		bpMenu = pMenu;
 		if(ClrScreenFlag)
@@ -855,7 +855,7 @@ static void stgMenu_MainMenuCBS(void)
 			
 			ClrScreenFlag = 0;
 			pMenu = MHead;
-			hal_Oled_ClearArea(0,14,128,50);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,14,128,50);		//æ¸…å±
 			hal_Oled_Refresh();
 			for(i=1; i<5; i++)
 			{
@@ -877,13 +877,13 @@ static void stgMenu_MainMenuCBS(void)
 	}
 }
 
-//Ì½²âÆ÷Åä¶Ô²Ëµ¥´¦Àíº¯Êı
+//æ¢æµ‹å™¨é…å¯¹èœå•å¤„ç†å‡½æ•°
 static void stgMenu_LearnSensorCBS(void)
 {
 	unsigned char keys,dat,tBuff[3];
 	static unsigned char PairingComplete = 0;
 	static unsigned short Timer = 0;
-	Stu_DTC stuTempDevice; 		//ÓÃÓÚÉèÖÃÌ½²âÆ÷²ÎÊıÊ±³õÊ¼»¯Ì½²âÆ÷ĞÅÏ¢
+	Stu_DTC stuTempDevice; 		//ç”¨äºè®¾ç½®æ¢æµ‹å™¨å‚æ•°æ—¶åˆå§‹åŒ–æ¢æµ‹å™¨ä¿¡æ¯
 	 
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
 	{
@@ -911,7 +911,7 @@ static void stgMenu_LearnSensorCBS(void)
 			QueueDataOut(RFDRcvMsg,&tBuff[2]);
 			QueueDataOut(RFDRcvMsg,&tBuff[1]);
 			QueueDataOut(RFDRcvMsg,&tBuff[0]);
-			hal_Oled_ClearArea(0,28,128,36);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,28,128,36);		//æ¸…å±
 			
 			
 			stuTempDevice.Code[2] = tBuff[2];
@@ -923,7 +923,7 @@ static void stgMenu_LearnSensorCBS(void)
 			(stuTempDevice.Code[0]==SENSOR_CODE_DOOR_TAMPER)||
 			(stuTempDevice.Code[0]==SENSOR_CODE_DOOR_LOWPWR))
 			{
-				//ÊÇÎŞÏßÃÅ´ÅÂë
+				//æ˜¯æ— çº¿é—¨ç£ç 
 				stuTempDevice.DTCType = DTC_DOOR;
 				
 			}else if((stuTempDevice.Code[0]==SENSOR_CODE_REMOTE_ENARM) ||
@@ -931,13 +931,13 @@ static void stgMenu_LearnSensorCBS(void)
 			(stuTempDevice.Code[0]==SENSOR_CODE_REMOTE_HOMEARM) ||
 			(stuTempDevice.Code[0]==SENSOR_CODE_REMOTE_SOS))
 			{
-				//ÎŞÏßÒ£¿ØÆ÷Âë
+				//æ— çº¿é¥æ§å™¨ç 
 				stuTempDevice.DTCType = DTC_REMOTE;
 			}else if((stuTempDevice.Code[0]==SENSOR_CODE_PIR)
 			|| (stuTempDevice.Code[0]==SENSOR_CODE_PIR_LOWPWR)
 			|| (stuTempDevice.Code[0]==SENSOR_CODE_PIR_TAMPER))
 			{
-				//ÎŞÏßºìÍâÂë
+				//æ— çº¿çº¢å¤–ç 
 				stuTempDevice.DTCType = DTC_PIR_MOTION;
 			}
 			stuTempDevice.ZoneType = ZONE_TYP_1ST;
@@ -960,7 +960,7 @@ static void stgMenu_LearnSensorCBS(void)
 				}
 				
 				hal_Oled_Refresh();
-				PairingComplete = 1;		//Åä¶ÔÍê³É±êÖ¾
+				PairingComplete = 1;		//é…å¯¹å®Œæˆæ ‡å¿—
 				Timer = 0;		 
 			}else
 			{
@@ -976,14 +976,14 @@ static void stgMenu_LearnSensorCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
-			case KEY5_CLICK_RELEASE:	//È¡Ïû
+			case KEY5_CLICK_RELEASE:	//å–æ¶ˆ
 				pModeMenu = pModeMenu->pParent;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 			break;
-			case KEY5_LONG_PRESS:		//·µ»Ø×ÀÃæ
+			case KEY5_LONG_PRESS:		//è¿”å›æ¡Œé¢
 				pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];;;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 			break;
@@ -996,14 +996,14 @@ static void stgMenu_LearnSensorCBS(void)
 		if(Timer > 150)//+1=10ms,10*150=1500ms=1.5s
 		{
 			Timer = 0;
-			pModeMenu = pModeMenu->pParent;			//1.5ÃëÊ±¼äµ½£¬×Ô¶¯·µ»Ø¸¸¼¶²Ëµ¥
+			pModeMenu = pModeMenu->pParent;			//1.5ç§’æ—¶é—´åˆ°ï¼Œè‡ªåŠ¨è¿”å›çˆ¶çº§èœå•
 			pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 		}
 	}
 }
 
 
-//Ì½²âÆ÷ÁĞ±í²Ëµ¥´¦Àíº¯Êı
+//æ¢æµ‹å™¨åˆ—è¡¨èœå•å¤„ç†å‡½æ•°
 static void stgMenu_DTCListCBS(void)
 {
 	unsigned char keys;
@@ -1015,10 +1015,10 @@ static void stgMenu_DTCListCBS(void)
 	static unsigned char DtcNameBuff[PARA_DTC_SUM][16];
 	static stu_mode_menu settingMode_DTCList_Sub_Menu[PARA_DTC_SUM];
 	static stu_mode_menu *pMenu;
-	static stu_mode_menu *bpMenu=0;		//ÓÃÀ´±¸·İÉÏÒ»´Î²Ëµ¥Ñ¡Ïî£¬Ö÷ÒªÓÃÓÚË¢ÆÁÅĞ¶Ï
-	static unsigned char stgMainMenuSelectedPos=0;	//ÓÃÀ´¼ÇÂ¼µ±Ç°Ñ¡ÖĞ²Ëµ¥µÄÎ»ÖÃ
-	static stu_mode_menu *MHead,*MTail;		//ÕâÁ½¸ö½á¹¹ÊÇÎªÁËÉÏÏÂÇĞ»»²Ëµ¥Ê±×ö·­Ò³´¦Àí
-	static unsigned char pMenuIdx=0;		//ÓÃÀ´¶¯Ì¬Ö¸Ê¾²Ëµ¥ÏÂ±ê,×îÖÕÕâ¸ö¾ÍÊÇÒÑÑ§Ï°Ì½²âÆ÷µÄ×ÜÊıÁ¿	
+	static stu_mode_menu *bpMenu=0;		//ç”¨æ¥å¤‡ä»½ä¸Šä¸€æ¬¡èœå•é€‰é¡¹ï¼Œä¸»è¦ç”¨äºåˆ·å±åˆ¤æ–­
+	static unsigned char stgMainMenuSelectedPos=0;	//ç”¨æ¥è®°å½•å½“å‰é€‰ä¸­èœå•çš„ä½ç½®
+	static stu_mode_menu *MHead,*MTail;		//è¿™ä¸¤ä¸ªç»“æ„æ˜¯ä¸ºäº†ä¸Šä¸‹åˆ‡æ¢èœå•æ—¶åšç¿»é¡µå¤„ç†
+	static unsigned char pMenuIdx=0;		//ç”¨æ¥åŠ¨æ€æŒ‡ç¤ºèœå•ä¸‹æ ‡,æœ€ç»ˆè¿™ä¸ªå°±æ˜¯å·²å­¦ä¹ æ¢æµ‹å™¨çš„æ€»æ•°é‡	
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
 	{
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
@@ -1036,7 +1036,7 @@ static void stgMenu_DTCListCBS(void)
 		hal_Oled_ShowString(40,0,"Dtc List",12,1);
 		hal_Oled_Refresh();
 		
-		//Öğ¸öÅĞ¶Ï£¬°ÑÅä¶ÔµÄÌ½²âÆ÷¶¼ÕÒ³öÀ´
+		//é€ä¸ªåˆ¤æ–­ï¼ŒæŠŠé…å¯¹çš„æ¢æµ‹å™¨éƒ½æ‰¾å‡ºæ¥
 		for(i=0; i<PARA_DTC_SUM; i++)
 		{
 			if(CheckPresenceofDtc(i))
@@ -1063,7 +1063,7 @@ static void stgMenu_DTCListCBS(void)
 		
 		if(pMenuIdx != 0)
 		{
-			//ÓĞÌ½²âÆ÷´æÔÚµÄÇé¿ö
+			//æœ‰æ¢æµ‹å™¨å­˜åœ¨çš„æƒ…å†µ
 			if(pMenuIdx > 1)
 			{
 				pMenu->pLase =  pMenu+(pMenuIdx-1);
@@ -1087,13 +1087,13 @@ static void stgMenu_DTCListCBS(void)
 			}
 		}else
 		{
-			//Ã»ÓĞÌ½²âÆ÷
+			//æ²¡æœ‰æ¢æµ‹å™¨
 			bpMenu = pMenu;
 			hal_Oled_ShowString(0,14," No detectors.",8,1);
 			hal_Oled_Refresh();
 		}
 
-		MHead = pMenu;			//¼ÇÂ¼µ±Ç°ÏÔÊ¾²Ëµ¥µÚÒ»Ïî
+		MHead = pMenu;			//è®°å½•å½“å‰æ˜¾ç¤ºèœå•ç¬¬ä¸€é¡¹
 		if(pMenuIdx < 2)
 		{
 			MTail = pMenu;
@@ -1102,13 +1102,13 @@ static void stgMenu_DTCListCBS(void)
 			MTail = pMenu+(pMenuIdx-1);
 		}else
 		{
-			MTail = pMenu+3;		//¼ÇÂ¼µ±Ç°ÏÔÊ¾²Ëµ¥×îºóÒ»Ïî,Ò»Ò³ÏÔÊ¾4ĞĞ
+			MTail = pMenu+3;		//è®°å½•å½“å‰æ˜¾ç¤ºèœå•æœ€åä¸€é¡¹,ä¸€é¡µæ˜¾ç¤º4è¡Œ
 		}
 		
 	}else if(pModeMenu->refreshScreenCmd==SCREEN_CMD_RECOVER)
 	{	
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
-		//»Ö¸´Ö®Ç°µÄÑ¡ÔñÎ»ÖÃÏÔÊ¾
+		//æ¢å¤ä¹‹å‰çš„é€‰æ‹©ä½ç½®æ˜¾ç¤º
 		hal_Oled_Clear();
 		hal_Oled_ShowString(40,0,"Dtc List",12,1);
 		hal_Oled_Refresh();
@@ -1121,34 +1121,34 @@ static void stgMenu_DTCListCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
-			case KEY1_CLICK_RELEASE:		//ÉÏ
+			case KEY1_CLICK_RELEASE:		//ä¸Š
 				if(pMenuIdx < 2)
 				{
-					//Ö»ÓĞÒ»¸öÌ½²âÆ÷²»×ö´¦Àí
+					//åªæœ‰ä¸€ä¸ªæ¢æµ‹å™¨ä¸åšå¤„ç†
 				}else if(pMenuIdx < 5)
 				{
-					//Ö»ÓĞÒ»Ò³£¬Ò²¾ÍÊÇÖ»ÓĞ4¸öÌ½²âÆ÷µÄÊ±ºò
-					if(stgMainMenuSelectedPos ==1)	//ÅĞ¶ÏÊÇ·ñÑ¡ÖĞµÄÊÇµÚÒ»ĞĞ
+					//åªæœ‰ä¸€é¡µï¼Œä¹Ÿå°±æ˜¯åªæœ‰4ä¸ªæ¢æµ‹å™¨çš„æ—¶å€™
+					if(stgMainMenuSelectedPos ==1)	//åˆ¤æ–­æ˜¯å¦é€‰ä¸­çš„æ˜¯ç¬¬ä¸€è¡Œ
 					{
-						//Í·Î²Ö¸Õë²»±ä£¬Ö»°Ñµ±Ç°²Ëµ¥Ö¸ÏòÉÏÒ»¸ö
+						//å¤´å°¾æŒ‡é’ˆä¸å˜ï¼ŒåªæŠŠå½“å‰èœå•æŒ‡å‘ä¸Šä¸€ä¸ª
 						stgMainMenuSelectedPos = pMenuIdx;
 						ClrScreenFlag = 1;
 						pMenu = pMenu->pLase;
 						
 					}else 
 					{
-						//²»ÇåÆÁ£¬Ö±½ÓË¢ĞÂ¾Ö²¿ÏÔÊ¾
-						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+						//ä¸æ¸…å±ï¼Œç›´æ¥åˆ·æ–°å±€éƒ¨æ˜¾ç¤º
+						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 						hal_Oled_Refresh();
 						pMenu = pMenu->pLase;
 						stgMainMenuSelectedPos--;
 					}
-				}else if(pMenuIdx > 4)	//µ±Ç°Ì½²âÆ÷³¬¹ı4¸ö
+				}else if(pMenuIdx > 4)	//å½“å‰æ¢æµ‹å™¨è¶…è¿‡4ä¸ª
 				{
-					if(stgMainMenuSelectedPos ==1)	//ÅĞ¶ÏÊÇ·ñÑ¡ÖĞµÄÊÇµÚÒ»ĞĞ
+					if(stgMainMenuSelectedPos ==1)	//åˆ¤æ–­æ˜¯å¦é€‰ä¸­çš„æ˜¯ç¬¬ä¸€è¡Œ
 					{
 						MHead = MHead->pLase;
 						pMenu = pMenu->pLase;
@@ -1157,7 +1157,7 @@ static void stgMenu_DTCListCBS(void)
 						ClrScreenFlag = 1;
 					}else
 					{
-						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 						hal_Oled_Refresh();
 						pMenu = pMenu->pLase;
 						stgMainMenuSelectedPos--;
@@ -1165,31 +1165,31 @@ static void stgMenu_DTCListCBS(void)
 				}
 			break;
 			
-			case KEY2_CLICK_RELEASE:		//ÏÂ 
+			case KEY2_CLICK_RELEASE:		//ä¸‹ 
 				if(pMenuIdx < 2)
 				{
-					//Ö»ÓĞÒ»¸öÌ½²âÆ÷²»×ö´¦Àí
+					//åªæœ‰ä¸€ä¸ªæ¢æµ‹å™¨ä¸åšå¤„ç†
 				}else if(pMenuIdx < 5)
 				{
-					//Ö»ÓĞÒ»Ò³£¬Ò²¾ÍÊÇÖ»ÓĞ4¸öÌ½²âÆ÷µÄÊ±ºò
-					if(stgMainMenuSelectedPos ==pMenuIdx)	//ÅĞ¶ÏÊÇ·ñÑ¡ÖĞµÄÊÇµÚ4ĞĞ
+					//åªæœ‰ä¸€é¡µï¼Œä¹Ÿå°±æ˜¯åªæœ‰4ä¸ªæ¢æµ‹å™¨çš„æ—¶å€™
+					if(stgMainMenuSelectedPos ==pMenuIdx)	//åˆ¤æ–­æ˜¯å¦é€‰ä¸­çš„æ˜¯ç¬¬4è¡Œ
 					{
-						//Í·Î²Ö¸Õë²»±ä£¬Ö»°Ñµ±Ç°²Ëµ¥Ö¸ÏòÏÂ¸ö
+						//å¤´å°¾æŒ‡é’ˆä¸å˜ï¼ŒåªæŠŠå½“å‰èœå•æŒ‡å‘ä¸‹ä¸ª
 						pMenu = pMenu->pNext;
 						stgMainMenuSelectedPos = 1;
 						ClrScreenFlag = 1;
 						
 					}else 
 					{
-						//²»ÇåÆÁ£¬Ö±½ÓË¢ĞÂ¾Ö²¿ÏÔÊ¾
-						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+						//ä¸æ¸…å±ï¼Œç›´æ¥åˆ·æ–°å±€éƒ¨æ˜¾ç¤º
+						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 						hal_Oled_Refresh();
-						pMenu = pMenu->pNext;																			//ÇĞ»»ÏÂÒ»¸öÑ¡Ïî
+						pMenu = pMenu->pNext;																			//åˆ‡æ¢ä¸‹ä¸€ä¸ªé€‰é¡¹
 						stgMainMenuSelectedPos++;
 					}
-				}else if(pMenuIdx > 4)	//µ±Ç°Ì½²âÆ÷³¬¹ı4¸ö
+				}else if(pMenuIdx > 4)	//å½“å‰æ¢æµ‹å™¨è¶…è¿‡4ä¸ª
 				{
-					if(stgMainMenuSelectedPos ==4)	//ÅĞ¶ÏÊÇ·ñÑ¡ÖĞµÄÊÇµÚÒ»ĞĞ
+					if(stgMainMenuSelectedPos ==4)	//åˆ¤æ–­æ˜¯å¦é€‰ä¸­çš„æ˜¯ç¬¬ä¸€è¡Œ
 					{
 						MHead = MHead->pNext;	
 						pMenu = pMenu->pNext;
@@ -1198,28 +1198,28 @@ static void stgMenu_DTCListCBS(void)
 						ClrScreenFlag = 1;
 					}else
 					{
-						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+						hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 						hal_Oled_Refresh();
-						pMenu = pMenu->pNext;																			//ÇĞ»»ÏÂÒ»¸öÑ¡Ïî
+						pMenu = pMenu->pNext;																			//åˆ‡æ¢ä¸‹ä¸€ä¸ªé€‰é¡¹
 						stgMainMenuSelectedPos++;
 					}
 				}
 			break;
 			
-			case KEY6_CLICK_RELEASE:			//È·¶¨
+			case KEY6_CLICK_RELEASE:			//ç¡®å®š
 				if(pMenuIdx>0)
 				{
 					pModeMenu = &DL_ZX_Review[STG_MENU_DL_ZX_REVIEW_MAIN]; 
-					pModeMenu->reserved = pMenu->reserved;	//ÕâÀïÓÃÓÚ´«µİºóÃæÒª²é¿´¡¢ĞŞ¸Ä¡¢É¾³ıÌ½²âÆ÷µÄIDºÅ
+					pModeMenu->reserved = pMenu->reserved;	//è¿™é‡Œç”¨äºä¼ é€’åé¢è¦æŸ¥çœ‹ã€ä¿®æ”¹ã€åˆ é™¤æ¢æµ‹å™¨çš„IDå·
 					pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 				}
 			break;
 			
-			case KEY5_CLICK_RELEASE:	//È¡Ïû
+			case KEY5_CLICK_RELEASE:	//å–æ¶ˆ
 				pModeMenu = pModeMenu->pParent;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RECOVER;
 			break;
-			case KEY5_LONG_PRESS:		//·µ»Ø×ÀÃæ
+			case KEY5_LONG_PRESS:		//è¿”å›æ¡Œé¢
 				pModeMenu = &generalModeMenu[GNL_MENU_DESKTOP];
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 			break;
@@ -1234,7 +1234,7 @@ static void stgMenu_DTCListCBS(void)
 		{
 			ClrScreenFlag = 0;
 			pMenu = MHead;
-			hal_Oled_ClearArea(0,14,128,50);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,14,128,50);		//æ¸…å±
 			hal_Oled_Refresh();
 			if(pMenuIdx <4)
 			{
@@ -1273,18 +1273,18 @@ static void stgMenu_dl_ReviewMainCBS(void)
 	unsigned char i,ClrScreenFlag=0;
 	Stu_DTC tStuDtc;
 	 
-	static stu_mode_menu *MHead;		//ÕâÁ½¸ö½á¹¹ÓÃÀ´·½±ãÏÔÊ¾£¬Ò³ÃæµÄÍ·¸úÎ²
-	static stu_mode_menu *pMenu,*bpMenu=0;	//ÓÃÀ´¼ÇÂ¼µ±Ç°Ñ¡ÖĞµÄ²Ëµ¥
+	static stu_mode_menu *MHead;		//è¿™ä¸¤ä¸ªç»“æ„ç”¨æ¥æ–¹ä¾¿æ˜¾ç¤ºï¼Œé¡µé¢çš„å¤´è·Ÿå°¾
+	static stu_mode_menu *pMenu,*bpMenu=0;	//ç”¨æ¥è®°å½•å½“å‰é€‰ä¸­çš„èœå•
 	
 	static unsigned char stgMainMenuSelectedPos=0;				 
 
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
-	{	//Ö´ĞĞÒ³ÃæÇĞ»»Ê±ÆÁÄ»Ë¢ĞÂÏÔÊ¾ 
+	{	//æ‰§è¡Œé¡µé¢åˆ‡æ¢æ—¶å±å¹•åˆ·æ–°æ˜¾ç¤º 
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
 		
 		if(CheckPresenceofDtc(pModeMenu->reserved))
 		{
-			GetDtcStu(&tStuDtc,pModeMenu->reserved);	//¶ÁÈ¡Ì½²âÆ÷ĞÅÏ¢
+			GetDtcStu(&tStuDtc,pModeMenu->reserved);	//è¯»å–æ¢æµ‹å™¨ä¿¡æ¯
 		}
 		 
 		 
@@ -1296,17 +1296,17 @@ static void stgMenu_dl_ReviewMainCBS(void)
 
 		pMenu = &DL_ZX_Review[1];
 		stgMainMenuSelectedPos = 1;
-		MHead = pMenu;			//¼ÇÂ¼µ±Ç°ÏÔÊ¾²Ëµ¥µÚÒ»Ïî
+		MHead = pMenu;			//è®°å½•å½“å‰æ˜¾ç¤ºèœå•ç¬¬ä¸€é¡¹
 		ClrScreenFlag = 1;
 		bpMenu = 0;
 		keys = 0xFF;
 	}else if(pModeMenu->refreshScreenCmd==SCREEN_CMD_RECOVER)
 	{
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
-		//»Ö¸´Ö®Ç°µÄÑ¡ÔñÎ»ÖÃÏÔÊ¾
+		//æ¢å¤ä¹‹å‰çš„é€‰æ‹©ä½ç½®æ˜¾ç¤º
 		if(CheckPresenceofDtc(pModeMenu->reserved))
 		{
-			GetDtcStu(&tStuDtc,pModeMenu->reserved);	//¶ÁÈ¡Ì½²âÆ÷ĞÅÏ¢
+			GetDtcStu(&tStuDtc,pModeMenu->reserved);	//è¯»å–æ¢æµ‹å™¨ä¿¡æ¯
 		}
 		 
 		 
@@ -1321,10 +1321,10 @@ static void stgMenu_dl_ReviewMainCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
-			case KEY1_CLICK:		//ÉÏ
+			case KEY1_CLICK:		//ä¸Š
 				if(stgMainMenuSelectedPos ==1)
 				{
 					pMenu = pMenu->pLase;
@@ -1332,13 +1332,13 @@ static void stgMenu_dl_ReviewMainCBS(void)
 					ClrScreenFlag = 1;
 				}else
 				{
-					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 					hal_Oled_Refresh();
 					pMenu = pMenu->pLase;
 					stgMainMenuSelectedPos--;
 				}
 			break;
-			case KEY2_CLICK:		//ÏÂ
+			case KEY2_CLICK:		//ä¸‹
 				if(stgMainMenuSelectedPos ==3)
 				{
 					pMenu = pMenu->pNext;
@@ -1346,9 +1346,9 @@ static void stgMenu_dl_ReviewMainCBS(void)
 					ClrScreenFlag = 1;
 				}else
 				{
-					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//È¡ÏûÑ¡ÖĞ±¾²Ëµ¥ÏÔÊ¾
+					hal_Oled_ShowString(0,14*stgMainMenuSelectedPos,pMenu->pModeType,8,1);		//å–æ¶ˆé€‰ä¸­æœ¬èœå•æ˜¾ç¤º
 					hal_Oled_Refresh();
-					pMenu = pMenu->pNext;																			//ÇĞ»»ÏÂÒ»¸öÑ¡Ïî
+					pMenu = pMenu->pNext;																			//åˆ‡æ¢ä¸‹ä¸€ä¸ªé€‰é¡¹
 					stgMainMenuSelectedPos++;
 				}
 			
@@ -1356,13 +1356,13 @@ static void stgMenu_dl_ReviewMainCBS(void)
 			break;
 			
 			case KEY6_CLICK_RELEASE:
-				pMenu->reserved = pModeMenu->reserved;	//¼ÌĞø°ÑÖ¸¶¨Ì½²âÆ÷½á¹¹ÌåÊı×éÏÂ±ê´«µİÏÂÈ¥
+				pMenu->reserved = pModeMenu->reserved;	//ç»§ç»­æŠŠæŒ‡å®šæ¢æµ‹å™¨ç»“æ„ä½“æ•°ç»„ä¸‹æ ‡ä¼ é€’ä¸‹å»
 				pModeMenu = pMenu;
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RESET;
 			break;
 			
 			case KEY5_CLICK_RELEASE:
-				pModeMenu = &settingModeMenu[STG_MENU_DTC_LIST];	//ÕâÀï²»ÄÜÖ±½Ó·µ»Ø¸¸¼¶£¬ÒòÎªÌ½²âÆ÷¸öÊıÊÇ¶¯Ì¬µÄ£¬¸¸¼¶Ã»³õÊ¼»¯
+				pModeMenu = &settingModeMenu[STG_MENU_DTC_LIST];	//è¿™é‡Œä¸èƒ½ç›´æ¥è¿”å›çˆ¶çº§ï¼Œå› ä¸ºæ¢æµ‹å™¨ä¸ªæ•°æ˜¯åŠ¨æ€çš„ï¼Œçˆ¶çº§æ²¡åˆå§‹åŒ–
 				pModeMenu->refreshScreenCmd = SCREEN_CMD_RECOVER;
 			break;
 			case KEY5_LONG_PRESS:
@@ -1379,7 +1379,7 @@ static void stgMenu_dl_ReviewMainCBS(void)
 		{
 			ClrScreenFlag = 0;
 			pMenu = MHead;
-			hal_Oled_ClearArea(0,14,128,50);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,14,128,50);		//æ¸…å±
 			hal_Oled_Refresh();
 			for(i=0; i<3; i++)
 			{
@@ -1406,7 +1406,7 @@ static void stgMenu_dl_ReviewCBS(void)
 	unsigned char temp[6];
 	
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
-	{	//Ö´ĞĞÒ³ÃæÇĞ»»Ê±ÆÁÄ»Ë¢ĞÂÏÔÊ¾ 
+	{	//æ‰§è¡Œé¡µé¢åˆ‡æ¢æ—¶å±å¹•åˆ·æ–°æ˜¾ç¤º 
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
 		 
 		if(CheckPresenceofDtc(pModeMenu->reserved))
@@ -1419,7 +1419,7 @@ static void stgMenu_dl_ReviewCBS(void)
 		hal_Oled_ShowString(40,0,pModeMenu->pModeType,12,1);
 		
 		hal_Oled_ShowString(0,16,"<Name>: ",8,1); 
-		//<Name>: 8¸ö×Ö·û£¬8*6=48
+		//<Name>: 8ä¸ªå­—ç¬¦ï¼Œ8*6=48
 		hal_Oled_ShowString(48,16,tStuDtc.Name,8,1);
 		
 		hal_Oled_ShowString(0,28,"<Type>: ",8,1);
@@ -1466,7 +1466,7 @@ static void stgMenu_dl_ReviewCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		switch(keys)
 		{
 			case KEY5_CLICK_RELEASE:
@@ -1535,7 +1535,7 @@ static void stgMenu_dl_EditCBS(void)
 	static unsigned char setValue = DTC_DOOR;
 
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
-	{	//Ö´ĞĞÒ³ÃæÇĞ»»Ê±ÆÁÄ»Ë¢ĞÂÏÔÊ¾ 
+	{	//æ‰§è¡Œé¡µé¢åˆ‡æ¢æ—¶å±å¹•åˆ·æ–°æ˜¾ç¤º 
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
 		stgMainMenuSelectedPos = 0; 
 		if(CheckPresenceofDtc(pModeMenu->reserved))
@@ -1593,12 +1593,12 @@ static void stgMenu_dl_EditCBS(void)
 		if(pModeMenu->keyVal != 0xff)
 		{
 			keys = pModeMenu->keyVal;
-			pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+			pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 			if(keys == KEY3_CLICK_RELEASE)
 			{
 				if(stgMainMenuSelectedPos == 0)		
 				{
-					//ÉèÖÃType
+					//è®¾ç½®Type
 					if(setValue == DTC_DOOR)
 					{
 						setValue = DTC_TYP_SUM-1;
@@ -1606,14 +1606,14 @@ static void stgMenu_dl_EditCBS(void)
 					{
 						setValue--;
 					}
-					tStuDtc.DTCType = (DTC_TYPE_TYPEDEF)setValue;			//¸üĞÂÌ½²âÆ÷²ÎÊı
-					hal_Oled_ClearArea(48,28,80,8);		//ÇåÆÁ
+					tStuDtc.DTCType = (DTC_TYPE_TYPEDEF)setValue;			//æ›´æ–°æ¢æµ‹å™¨å‚æ•°
+					hal_Oled_ClearArea(48,28,80,8);		//æ¸…å±
 					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[setValue],8,0);
 					hal_Oled_Refresh();
 
 				}else if(stgMainMenuSelectedPos == 1)
 				{
-					//ÉèÖÃZone type
+					//è®¾ç½®Zone type
 					if(setValue == ZONE_TYP_24HOURS)
 					{
 						setValue = STG_DEV_AT_SUM-1;
@@ -1621,8 +1621,8 @@ static void stgMenu_dl_EditCBS(void)
 					{
 						setValue--;
 					}
-					tStuDtc.ZoneType = (ZONE_TYPED_TYPEDEF)setValue;			////¸üĞÂÌ½²âÆ÷²ÎÊı
-					hal_Oled_ClearArea(72,40,56,8);		//ÇåÆÁ
+					tStuDtc.ZoneType = (ZONE_TYPED_TYPEDEF)setValue;			////æ›´æ–°æ¢æµ‹å™¨å‚æ•°
+					hal_Oled_ClearArea(72,40,56,8);		//æ¸…å±
 					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[setValue],8,0);
 					hal_Oled_Refresh();
 				}
@@ -1630,7 +1630,7 @@ static void stgMenu_dl_EditCBS(void)
 			{
 				if(stgMainMenuSelectedPos == 0)
 				{
-					//ÉèÖÃType
+					//è®¾ç½®Type
 					if(setValue == (DTC_TYP_SUM-1))
 					{
 						setValue = 0;
@@ -1638,13 +1638,13 @@ static void stgMenu_dl_EditCBS(void)
 					{
 						setValue++;
 					}
-					tStuDtc.DTCType = (DTC_TYPE_TYPEDEF)setValue;			//¸üĞÂÌ½²âÆ÷²ÎÊı
-					hal_Oled_ClearArea(48,28,80,8);		//ÇåÆÁ
+					tStuDtc.DTCType = (DTC_TYPE_TYPEDEF)setValue;			//æ›´æ–°æ¢æµ‹å™¨å‚æ•°
+					hal_Oled_ClearArea(48,28,80,8);		//æ¸…å±
 					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[setValue],8,0);
 					hal_Oled_Refresh();
 				}else if(stgMainMenuSelectedPos == 1)
 				{
-					//ÉèÖÃZone type
+					//è®¾ç½®Zone type
 					if(setValue == (STG_DEV_AT_SUM-1))
 					{
 						setValue = 0;
@@ -1652,8 +1652,8 @@ static void stgMenu_dl_EditCBS(void)
 					{
 						setValue++;
 					}
-					tStuDtc.ZoneType = (ZONE_TYPED_TYPEDEF)setValue;			////¸üĞÂÌ½²âÆ÷²ÎÊı
-					hal_Oled_ClearArea(72,40,56,8);		//ÇåÆÁ
+					tStuDtc.ZoneType = (ZONE_TYPED_TYPEDEF)setValue;			////æ›´æ–°æ¢æµ‹å™¨å‚æ•°
+					hal_Oled_ClearArea(72,40,56,8);		//æ¸…å±
 					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[setValue],8,0);
 					hal_Oled_Refresh();
 				}
@@ -1664,23 +1664,23 @@ static void stgMenu_dl_EditCBS(void)
 				{
 					stgMainMenuSelectedPos = 1;
 					setValue = tStuDtc.ZoneType;
-					hal_Oled_ClearArea(48,28,80,8);		//ÇåÆÁ
-					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[tStuDtc.DTCType],8,1);	//»Ö¸´Ì½²âÆ÷ÀàĞÍÎ´Ñ¡ÖĞÏÔÊ¾
+					hal_Oled_ClearArea(48,28,80,8);		//æ¸…å±
+					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[tStuDtc.DTCType],8,1);	//æ¢å¤æ¢æµ‹å™¨ç±»å‹æœªé€‰ä¸­æ˜¾ç¤º
 
-					hal_Oled_ClearArea(72,40,56,8);		//ÇåÆÁ
+					hal_Oled_ClearArea(72,40,56,8);		//æ¸…å±
 
-					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[setValue],8,0);			//ÇĞ»»Ñ¡ÖĞ²Ëµ¥µ½·ÀÇøÀàĞÍ
+					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[setValue],8,0);			//åˆ‡æ¢é€‰ä¸­èœå•åˆ°é˜²åŒºç±»å‹
 					hal_Oled_Refresh();
 				}else
 				{
 					stgMainMenuSelectedPos = 0;
 					setValue = tStuDtc.DTCType;
-					hal_Oled_ClearArea(48,28,80,8);		//ÇåÆÁ
-					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[setValue],8,0);		//ÇĞ»»Ñ¡ÖĞ²Ëµ¥µ½Ì½²âÆ÷ÀàĞÍ
+					hal_Oled_ClearArea(48,28,80,8);		//æ¸…å±
+					hal_Oled_ShowString(48,28,pDL_ZX_Edit_DTCType_Val[setValue],8,0);		//åˆ‡æ¢é€‰ä¸­èœå•åˆ°æ¢æµ‹å™¨ç±»å‹
 					
 					
-					hal_Oled_ClearArea(72,40,56,8);		//ÇåÆÁ
-					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[tStuDtc.ZoneType],8,1);	//»Ö¸´Ì½²âÆ÷·ÀÇøÀàĞÍÎ´Ñ¡ÖĞÏÔÊ¾
+					hal_Oled_ClearArea(72,40,56,8);		//æ¸…å±
+					hal_Oled_ShowString(72,40,pDL_ZX_Edit_ZoneType_Val[tStuDtc.ZoneType],8,1);	//æ¢å¤æ¢æµ‹å™¨é˜²åŒºç±»å‹æœªé€‰ä¸­æ˜¾ç¤º
 					
 					hal_Oled_Refresh();
 				}
@@ -1692,7 +1692,7 @@ static void stgMenu_dl_EditCBS(void)
 			}else if(keys == KEY6_CLICK_RELEASE)
 			{
 				timer = 0;
-				SetDtcAbt(tStuDtc.ID-1,&tStuDtc);		//¸üĞÂÌ½²âÆ÷ÊôĞÔ£¬´øĞ´ÈëEEPROM¹¦ÄÜ
+				SetDtcAbt(tStuDtc.ID-1,&tStuDtc);		//æ›´æ–°æ¢æµ‹å™¨å±æ€§ï¼Œå¸¦å†™å…¥EEPROMåŠŸèƒ½
 				editComplete = 1;
 				hal_Oled_Clear();
 				hal_Oled_ShowString(16,20,"Update..",24,1);
@@ -1709,7 +1709,7 @@ static void stgMenu_dl_EditCBS(void)
 	if(editComplete)
 	{
 		timer++;
-		if(timer > 150)		//1.5Ãë×Ô¶¯ÍË³ö
+		if(timer > 150)		//1.5ç§’è‡ªåŠ¨é€€å‡º
 		{
 			timer = 0;
 			editComplete = 0;
@@ -1730,7 +1730,7 @@ static void stgMenu_dl_DeleteCBS(void)
 	static unsigned char stgMainMenuSelectedPos=0;
 
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
-	{	//Ö´ĞĞÒ³ÃæÇĞ»»Ê±ÆÁÄ»Ë¢ĞÂÏÔÊ¾ 
+	{	//æ‰§è¡Œé¡µé¢åˆ‡æ¢æ—¶å±å¹•åˆ·æ–°æ˜¾ç¤º 
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
 		stgMainMenuSelectedPos = 0; 
 		if(CheckPresenceofDtc(pModeMenu->reserved))
@@ -1765,14 +1765,14 @@ static void stgMenu_dl_DeleteCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		
 		if((keys == KEY3_CLICK_RELEASE) || (keys == KEY4_CLICK_RELEASE))
 		{
 			if(stgMainMenuSelectedPos == 0)		
 			{
 				stgMainMenuSelectedPos = 1;
-				hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+				hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 				hal_Oled_ShowString(40,48,"Yes",12,0); 
 				hal_Oled_ShowString(88,48,"No",12,1); 
 				hal_Oled_Refresh();
@@ -1780,7 +1780,7 @@ static void stgMenu_dl_DeleteCBS(void)
 			}else if(stgMainMenuSelectedPos == 1)
 			{
 				stgMainMenuSelectedPos = 0;
-				hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+				hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 				hal_Oled_ShowString(40,48,"Yes",12,1); 
 				hal_Oled_ShowString(88,48,"No",12,0); 
 				hal_Oled_Refresh();
@@ -1790,11 +1790,11 @@ static void stgMenu_dl_DeleteCBS(void)
 		{
 			if(stgMainMenuSelectedPos)
 			{
-				//È·ÈÏÉ¾³ı
+				//ç¡®è®¤åˆ é™¤
 				DelComplete = 1;
 				timer = 0;
 				tStuDtc.Mark = 0;
-				SetDtcAbt(tStuDtc.ID-1,&tStuDtc);		//¸üĞÂÌ½²âÆ÷ÊôĞÔ£¬´øĞ´ÈëEEPROM¹¦ÄÜ
+				SetDtcAbt(tStuDtc.ID-1,&tStuDtc);		//æ›´æ–°æ¢æµ‹å™¨å±æ€§ï¼Œå¸¦å†™å…¥EEPROMåŠŸèƒ½
 				hal_Oled_Clear();
 				hal_Oled_ShowString(16,20,"Update..",24,1);
 				hal_Oled_Refresh();	
@@ -1816,7 +1816,7 @@ static void stgMenu_dl_DeleteCBS(void)
 	if(DelComplete)
 	{
 		timer++;
-		if(timer > 150)		//1.5Ãë×Ô¶¯ÍË³ö
+		if(timer > 150)		//1.5ç§’è‡ªåŠ¨é€€å‡º
 		{
 			timer = 0;
 			DelComplete = 0;
@@ -1826,7 +1826,7 @@ static void stgMenu_dl_DeleteCBS(void)
 	}
 }
 
-//wifiÅäÍø²Ëµ¥´¦Àíº¯Êı
+//wifié…ç½‘èœå•å¤„ç†å‡½æ•°
 static void stgMenu_WifiCBS(void)
 {
 	static unsigned char APStep = 0;
@@ -1866,7 +1866,7 @@ static void stgMenu_WifiCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		
 		if((keys == KEY3_CLICK_RELEASE) 
 		|| (keys == KEY4_CLICK_RELEASE))
@@ -1874,7 +1874,7 @@ static void stgMenu_WifiCBS(void)
 			if(stgMainMenuSelectedPos == 0)		
 			{
 				stgMainMenuSelectedPos = 1;
-				hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+				hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 				hal_Oled_ShowString(40,48,"Yes",12,0); 
 				hal_Oled_ShowString(88,48,"No",12,1); 
 
@@ -1883,7 +1883,7 @@ static void stgMenu_WifiCBS(void)
 			}else if(stgMainMenuSelectedPos == 1)
 			{
 				stgMainMenuSelectedPos = 0;
-				hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+				hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 				hal_Oled_ShowString(40,48,"Yes",12,1); 
 				hal_Oled_ShowString(88,48,"No",12,0); 
 				hal_Oled_Refresh();
@@ -1897,8 +1897,8 @@ static void stgMenu_WifiCBS(void)
 			if(stgMainMenuSelectedPos)
 			{
 				APStep = 1;
-				mcu_set_wifi_mode(1);		//ÈÃwifi½øÈëAPÅäÍøÄ£Ê½
-				hal_Oled_ClearArea(0,20,128,44);		//ÇåÆÁ
+				mcu_set_wifi_mode(1);		//è®©wifiè¿›å…¥APé…ç½‘æ¨¡å¼
+				hal_Oled_ClearArea(0,20,128,44);		//æ¸…å±
 				hal_Oled_ShowString(16,30,"Please wait..",8,1);
 				hal_Oled_Refresh();	
 			}else
@@ -1928,7 +1928,7 @@ static void stgMenu_WifiCBS(void)
 	{
 		if(wifiWorkState == AP_STATE)
 		{
-			hal_Oled_ClearArea(0,20,128,44);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,20,128,44);		//æ¸…å±
 			hal_Oled_ShowString(0,30,"Enter ap mode.",8,1);
 			hal_Oled_Refresh();
 			LedMsgInput(LED1,LED_BLINK1,1);
@@ -1938,7 +1938,7 @@ static void stgMenu_WifiCBS(void)
 	{
 		if(wifiWorkState == WIFI_NOT_CONNECTED)
 		{
-			hal_Oled_ClearArea(0,20,128,44);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,20,128,44);		//æ¸…å±
 			hal_Oled_ShowString(0,30,"Connect to wifi ok.",8,1);
 			hal_Oled_Refresh();
 			LedMsgInput(LED1,LED_BLINK3,1);
@@ -1948,7 +1948,7 @@ static void stgMenu_WifiCBS(void)
 	{
 		if(wifiWorkState == WIFI_CONNECTED)
 		{
-			hal_Oled_ClearArea(0,20,128,44);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,20,128,44);		//æ¸…å±
 			hal_Oled_ShowString(0,30,"Connect to router ok.",8,1);
 			hal_Oled_Refresh();
 			LedMsgInput(LED1,LED_BLINK4,1);
@@ -1958,7 +1958,7 @@ static void stgMenu_WifiCBS(void)
 	{
 		if(wifiWorkState == WIFI_CONN_CLOUD)
 		{
-			hal_Oled_ClearArea(0,20,128,44);		//ÇåÆÁ
+			hal_Oled_ClearArea(0,20,128,44);		//æ¸…å±
 			hal_Oled_ShowString(0,30,"Connect to server ok.",8,1);
 			hal_Oled_ShowString(0,40,"Connect success!",8,1);
 			hal_Oled_Refresh();
@@ -1983,7 +1983,7 @@ static void stgMenu_WifiCBS(void)
 	}
 }
 
-//Éè±¸ĞÅÏ¢²Ëµ¥´¦Àíº¯Êı
+//è®¾å¤‡ä¿¡æ¯èœå•å¤„ç†å‡½æ•°
 static void stgMenu_MachineInfoCBS(void)
 {
 	unsigned char keys;
@@ -2011,7 +2011,7 @@ static void stgMenu_MachineInfoCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		if(keys == KEY5_CLICK_RELEASE)
 		{
 			pModeMenu = pModeMenu->pParent;
@@ -2024,7 +2024,7 @@ static void stgMenu_MachineInfoCBS(void)
 	}
 }
 
-//»Ö¸´³ö³§ÉèÖÃ²Ëµ¥´¦Àíº¯Êı
+//æ¢å¤å‡ºå‚è®¾ç½®èœå•å¤„ç†å‡½æ•°
 static void stgMenu_FactorySettingsCBS(void)
 {
 	unsigned char keys = 0xFF;
@@ -2036,7 +2036,7 @@ static void stgMenu_FactorySettingsCBS(void)
 
 
 	if(pModeMenu->refreshScreenCmd == SCREEN_CMD_RESET)
-	{	//Ö´ĞĞÒ³ÃæÇĞ»»Ê±ÆÁÄ»Ë¢ĞÂÏÔÊ¾ 
+	{	//æ‰§è¡Œé¡µé¢åˆ‡æ¢æ—¶å±å¹•åˆ·æ–°æ˜¾ç¤º 
 		pModeMenu->refreshScreenCmd = SCREEN_CMD_NULL;
 		stgMainMenuSelectedPos = 0; 
 	
@@ -2062,7 +2062,7 @@ static void stgMenu_FactorySettingsCBS(void)
 	if(pModeMenu->keyVal != 0xff)
 	{
 		keys = pModeMenu->keyVal;
-		pModeMenu->keyVal = 0xFF;	//»Ö¸´²Ëµ¥°´¼üÖµ
+		pModeMenu->keyVal = 0xFF;	//æ¢å¤èœå•æŒ‰é”®å€¼
 		if(!Complete)
 		{
 			if((keys == KEY3_CLICK_RELEASE) || (keys == KEY4_CLICK_RELEASE))
@@ -2070,7 +2070,7 @@ static void stgMenu_FactorySettingsCBS(void)
 				if(stgMainMenuSelectedPos == 0)		
 				{
 					stgMainMenuSelectedPos = 1;
-					hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+					hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 					hal_Oled_ShowString(40,48,"Yes",12,0); 
 					hal_Oled_ShowString(88,48,"No",12,1); 
 					hal_Oled_Refresh();
@@ -2078,7 +2078,7 @@ static void stgMenu_FactorySettingsCBS(void)
 				}else if(stgMainMenuSelectedPos == 1)
 				{
 					stgMainMenuSelectedPos = 0;
-					hal_Oled_ClearArea(40,48,88,16);		//ÇåÆÁ
+					hal_Oled_ClearArea(40,48,88,16);		//æ¸…å±
 					hal_Oled_ShowString(40,48,"Yes",12,1); 
 					hal_Oled_ShowString(88,48,"No",12,0); 
 					hal_Oled_Refresh();
@@ -2088,10 +2088,10 @@ static void stgMenu_FactorySettingsCBS(void)
 			{
 				if(stgMainMenuSelectedPos)
 				{
-					//È·ÈÏ 
+					//ç¡®è®¤ 
 					Complete = 1;
 					timer = 0;
-					FactoryReset();		//µ÷ÓÃ¸´Î»EEPROMÊı¾İº¯Êı
+					FactoryReset();		//è°ƒç”¨å¤ä½EEPROMæ•°æ®å‡½æ•°
 					hal_Oled_Clear();
 					hal_Oled_ShowString(16,20,"Update..",24,1);
 					hal_Oled_Refresh();	
@@ -2114,7 +2114,7 @@ static void stgMenu_FactorySettingsCBS(void)
 	if(Complete)
 	{
 		timer++;
-		if(timer > 150)		//1.5Ãë×Ô¶¯ÍË³ö
+		if(timer > 150)		//1.5ç§’è‡ªåŠ¨é€€å‡º
 		{
 			timer = 0;
 			Complete = 0;
@@ -2124,9 +2124,9 @@ static void stgMenu_FactorySettingsCBS(void)
 	}
 }
 
-//-----------------Çı¶¯²ã»Øµ÷´¦Àíº¯Êı------------------------
+//-----------------é©±åŠ¨å±‚å›è°ƒå¤„ç†å‡½æ•°------------------------
  
-//°´¼ü»Øµ÷º¯Êı
+//æŒ‰é”®å›è°ƒå‡½æ•°
 static void KeyEventHandle(KEY_VALUE_TYPEDEF keys)
 {
 	if(!ScreenState)
@@ -2154,7 +2154,7 @@ static void KeyEventHandle(KEY_VALUE_TYPEDEF keys)
 }
 
 
-//RFD½ÓÊÕ»Øµ÷º¯Êı
+//RFDæ¥æ”¶å›è°ƒå‡½æ•°
 static void RfdRcvHandle(unsigned char *pBuff)
 {
 	unsigned char temp;
@@ -2165,12 +2165,12 @@ static void RfdRcvHandle(unsigned char *pBuff)
 	 
 }
 
-//ÔÆ·şÎñÆ÷Êı¾İ½ÓÊÕ»Øµ÷º¯Êı
+//äº‘æœåŠ¡å™¨æ•°æ®æ¥æ”¶å›è°ƒå‡½æ•°
 static void ServerEventHandle(WIFI_MSG_TYPE type,unsigned char *pData)
 {
 	switch(type)
 	{
-		case WF_HOST_STATE:	//Ö÷»ú×´Ì¬
+		case WF_HOST_STATE:	//ä¸»æœºçŠ¶æ€
 			if(*pData == 0)
 			{
 				SystemMode_Change(SYSTEM_MODE_ENARM);
@@ -2184,14 +2184,14 @@ static void ServerEventHandle(WIFI_MSG_TYPE type,unsigned char *pData)
 		break;
 		case WF_TIME:
 		/*
-		time[0]ÎªÊÇ·ñ»ñÈ¡Ê±¼ä³É¹¦±êÖ¾£¬Îª 0 ±íÊ¾Ê§°Ü£¬Îª 1±íÊ¾³É¹¦
-		time[1] Îª Äê ·İ , 0x00 ±í Ê¾2000 Äê
-		time[2]ÎªÔÂ·İ£¬´Ó 1 ¿ªÊ¼µ½12 ½áÊø
-		time[3]ÎªÈÕÆÚ£¬´Ó 1 ¿ªÊ¼µ½31 ½áÊø
-		time[4]ÎªÊ±ÖÓ£¬´Ó 0 ¿ªÊ¼µ½23 ½áÊø
-		time[5]Îª·ÖÖÓ£¬´Ó 0 ¿ªÊ¼µ½59 ½áÊø
-		time[6]ÎªÃëÖÓ£¬´Ó 0 ¿ªÊ¼µ½59 ½áÊø
-		time[7]ÎªĞÇÆÚ£¬´Ó 1 ¿ªÊ¼µ½ 7 ½áÊø£¬1´ú±íĞÇÆÚÒ»
+		time[0]ä¸ºæ˜¯å¦è·å–æ—¶é—´æˆåŠŸæ ‡å¿—ï¼Œä¸º 0 è¡¨ç¤ºå¤±è´¥ï¼Œä¸º 1è¡¨ç¤ºæˆåŠŸ
+		time[1] ä¸º å¹´ ä»½ , 0x00 è¡¨ ç¤º2000 å¹´
+		time[2]ä¸ºæœˆä»½ï¼Œä» 1 å¼€å§‹åˆ°12 ç»“æŸ
+		time[3]ä¸ºæ—¥æœŸï¼Œä» 1 å¼€å§‹åˆ°31 ç»“æŸ
+		time[4]ä¸ºæ—¶é’Ÿï¼Œä» 0 å¼€å§‹åˆ°23 ç»“æŸ
+		time[5]ä¸ºåˆ†é’Ÿï¼Œä» 0 å¼€å§‹åˆ°59 ç»“æŸ
+		time[6]ä¸ºç§’é’Ÿï¼Œä» 0 å¼€å§‹åˆ°59 ç»“æŸ
+		time[7]ä¸ºæ˜ŸæœŸï¼Œä» 1 å¼€å§‹åˆ° 7 ç»“æŸï¼Œ1ä»£è¡¨æ˜ŸæœŸä¸€
 		*/
 		//2021-04-09 wes 17:22
 			stuSystemtime.year=2000+pData[1];
@@ -2206,15 +2206,15 @@ static void ServerEventHandle(WIFI_MSG_TYPE type,unsigned char *pData)
 		case WF_CONNECT_STATE:
 			wifiWorkState = *pData;
 						/**
-			 * @brief  »ñÈ¡ WIFI ×´Ì¬½á¹û
-			 * @param[in] {result} Ö¸Ê¾ WIFI ¹¤×÷×´Ì¬
-			 * @ref         0x00: wifi×´Ì¬ 1 smartconfig ÅäÖÃ×´Ì¬
-			 * @ref         0x01: wifi×´Ì¬ 2 AP ÅäÖÃ×´Ì¬
-			 * @ref         0x02: wifi×´Ì¬ 3 WIFI ÒÑÅäÖÃµ«Î´Á¬ÉÏÂ·ÓÉÆ÷
-			 * @ref         0x03: wifi×´Ì¬ 4 WIFI ÒÑÅäÖÃÇÒÁ¬ÉÏÂ·ÓÉÆ÷
-			 * @ref         0x04: wifi×´Ì¬ 5 ÒÑÁ¬ÉÏÂ·ÓÉÆ÷ÇÒÁ¬½Óµ½ÔÆ¶Ë
-			 * @ref         0x05: wifi×´Ì¬ 6 WIFI Éè±¸´¦ÓÚµÍ¹¦ºÄÄ£Ê½
-			 * @ref         0x06: wifi×´Ì¬ 7 Smartconfig&AP¹²´æ×´Ì¬
+			 * @brief  è·å– WIFI çŠ¶æ€ç»“æœ
+			 * @param[in] {result} æŒ‡ç¤º WIFI å·¥ä½œçŠ¶æ€
+			 * @ref         0x00: wifiçŠ¶æ€ 1 smartconfig é…ç½®çŠ¶æ€
+			 * @ref         0x01: wifiçŠ¶æ€ 2 AP é…ç½®çŠ¶æ€
+			 * @ref         0x02: wifiçŠ¶æ€ 3 WIFI å·²é…ç½®ä½†æœªè¿ä¸Šè·¯ç”±å™¨
+			 * @ref         0x03: wifiçŠ¶æ€ 4 WIFI å·²é…ç½®ä¸”è¿ä¸Šè·¯ç”±å™¨
+			 * @ref         0x04: wifiçŠ¶æ€ 5 å·²è¿ä¸Šè·¯ç”±å™¨ä¸”è¿æ¥åˆ°äº‘ç«¯
+			 * @ref         0x05: wifiçŠ¶æ€ 6 WIFI è®¾å¤‡å¤„äºä½åŠŸè€—æ¨¡å¼
+			 * @ref         0x06: wifiçŠ¶æ€ 7 Smartconfig&APå…±å­˜çŠ¶æ€
 			 */	
 		break;
 
@@ -2224,8 +2224,8 @@ static void ServerEventHandle(WIFI_MSG_TYPE type,unsigned char *pData)
 void mcu_all_dp_update()
 {
 
-  mcu_dp_enum_update(DPID_MASTER_MODE,pStuSystemMode->ID,STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //Ã¶¾ÙĞÍÊı¾İÉÏ±¨;
-  mcu_dp_string_update(DPID_ALARM_ACTIVE," ",sizeof(" "),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGĞÍÊı¾İÉÏ±¨;
+  mcu_dp_enum_update(DPID_MASTER_MODE,pStuSystemMode->ID,STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //æšä¸¾å‹æ•°æ®ä¸ŠæŠ¥;
+  mcu_dp_string_update(DPID_ALARM_ACTIVE," ",sizeof(" "),STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //STRINGå‹æ•°æ®ä¸ŠæŠ¥;
 
 }
 

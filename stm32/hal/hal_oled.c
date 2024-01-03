@@ -401,35 +401,35 @@ const unsigned char asc2_2412[][36]={
 
 unsigned char OLED_GRAM[144][8];
 
-//·´ÏÔº¯Êı
+//åæ˜¾å‡½æ•°
 void hal_Oled_ColorTurn(unsigned char i)
 {
 	if(i==0)
 		{
-			hal_Oled_WR_Byte(0xA6,OLED_CMD);//Õı³£ÏÔÊ¾
+			hal_Oled_WR_Byte(0xA6,OLED_CMD);//æ­£å¸¸æ˜¾ç¤º
 		}
 	if(i==1)
 		{
-			hal_Oled_WR_Byte(0xA7,OLED_CMD);//·´É«ÏÔÊ¾
+			hal_Oled_WR_Byte(0xA7,OLED_CMD);//åè‰²æ˜¾ç¤º
 		}
 }
 
-//ÆÁÄ»Ğı×ª180¶È
+//å±å¹•æ—‹è½¬180åº¦
 void hal_Oled_DisplayTurn(unsigned char i)
 {
 	if(i==0)
 		{
-			hal_Oled_WR_Byte(0xC8,OLED_CMD);//Õı³£ÏÔÊ¾
+			hal_Oled_WR_Byte(0xC8,OLED_CMD);//æ­£å¸¸æ˜¾ç¤º
 			hal_Oled_WR_Byte(0xA1,OLED_CMD);
 		}
 	if(i==1)
 		{
-			hal_Oled_WR_Byte(0xC0,OLED_CMD);//·´×ªÏÔÊ¾
+			hal_Oled_WR_Byte(0xC0,OLED_CMD);//åè½¬æ˜¾ç¤º
 			hal_Oled_WR_Byte(0xA0,OLED_CMD);
 		}
 }
 
-static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//Ó²¼şÊµÏÖSPI Ä£Ê½ 3
+static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//ç¡¬ä»¶å®ç°SPI æ¨¡å¼ 3
 {		
 	unsigned char retry=0;		
 	if(cmd)
@@ -440,11 +440,11 @@ static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//Ó²¼şÊµÏÖSPI
 		OLED_DC_Clr();		  
 	}
 	 
-	SPI1->DR=dat;	 	  //·¢ËÍÒ»¸öbyte 
+	SPI1->DR=dat;	 	  //å‘é€ä¸€ä¸ªbyte 
 			 
 	retry=0;
  
-	while((SPI1->SR & SPI_I2S_FLAG_BSY) != RESET)		//Èç¹ûÒÆÖ²·¢²»³öÈ¥£¬ÉÔÎ¢ÑÓÊ±£¬·ÀÖ¹ËÀÔÚÕâÀï
+	while((SPI1->SR & SPI_I2S_FLAG_BSY) != RESET)		//å¦‚æœç§»æ¤å‘ä¸å‡ºå»ï¼Œç¨å¾®å»¶æ—¶ï¼Œé˜²æ­¢æ­»åœ¨è¿™é‡Œ
 	{
 		retry++;
 		if(retry>200)
@@ -456,7 +456,7 @@ static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//Ó²¼şÊµÏÖSPI
 
 
 
-// static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)	//Èí¼şÊµÏÖSPI Ä£Ê½ 3
+// static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)	//è½¯ä»¶å®ç°SPI æ¨¡å¼ 3
 // {		
 // 	unsigned char i;
 
@@ -471,7 +471,7 @@ static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//Ó²¼şÊµÏÖSPI
 // 	OLED_CS_Clr();
 // 	for(i = 0;i < 8;i++)
 // 	{
-// 		OLED_SCL_Clr();		//SPI Ä£Ê½ 3 ¿ÕÏĞÊ±ºòSCLÊÇ¸ßµÄ×´Ì¬£¬ÒªÏÈÀ­µÍ
+// 		OLED_SCL_Clr();		//SPI æ¨¡å¼ 3 ç©ºé—²æ—¶å€™SCLæ˜¯é«˜çš„çŠ¶æ€ï¼Œè¦å…ˆæ‹‰ä½
 // 		if(dat & 0x80)
 // 		{
 // 			OLED_SDA_Set();
@@ -490,9 +490,9 @@ static void hal_Oled_WR_Byte(unsigned char dat,unsigned char cmd)		//Ó²¼şÊµÏÖSPI
 
 
 
-//ÇåÆÁÖ¸¶¨ÇøÓò
-//x,y£ºÆğµã×ø±ê
-//sizex,sizey,³¤¿í
+//æ¸…å±æŒ‡å®šåŒºåŸŸ
+//x,yï¼šèµ·ç‚¹åæ ‡
+//sizex,sizey,é•¿å®½
  
 void hal_Oled_ClearArea(unsigned char x,unsigned char y,unsigned char sizex,unsigned char sizey)
 {
@@ -501,7 +501,7 @@ void hal_Oled_ClearArea(unsigned char x,unsigned char y,unsigned char sizex,unsi
 	unsigned char y1;
  
 	y1 = y;
-	//sizey=sizey/8+((sizey%8)?1:0);	//¼ÆËãÒ»¸öÍ¼ĞÎyÖáËùÕ¼ÓÃµÄ×Ö½ÚÊı
+	//sizey=sizey/8+((sizey%8)?1:0);	//è®¡ç®—ä¸€ä¸ªå›¾å½¢yè½´æ‰€å ç”¨çš„å­—èŠ‚æ•°
 	xy=sizey/8;
 	 
 	for(n=0;n<xy;n++)
@@ -513,7 +513,7 @@ void hal_Oled_ClearArea(unsigned char x,unsigned char y,unsigned char sizex,unsi
 				hal_Oled_DrawPoint(x+i,y1+m,0);
 			}
 		}
-		//Ò»ĞĞÊı¾İ´«ÊäÍê±Ï
+		//ä¸€è¡Œæ•°æ®ä¼ è¾“å®Œæ¯•
 		y1 = y1+8;
 	}
 	
@@ -528,36 +528,36 @@ void hal_Oled_ClearArea(unsigned char x,unsigned char y,unsigned char sizex,unsi
 	
 	
 }
-//¿ªÆôOLEDÏÔÊ¾ 
+//å¼€å¯OLEDæ˜¾ç¤º 
 void hal_Oled_DisPlay_On(void)
 {
-	hal_Oled_WR_Byte(0x8D,OLED_CMD);//µçºÉ±ÃÊ¹ÄÜ
-	hal_Oled_WR_Byte(0x14,OLED_CMD);//¿ªÆôµçºÉ±Ã
-	hal_Oled_WR_Byte(0xAF,OLED_CMD);//µãÁÁÆÁÄ»
+	hal_Oled_WR_Byte(0x8D,OLED_CMD);//ç”µè·æ³µä½¿èƒ½
+	hal_Oled_WR_Byte(0x14,OLED_CMD);//å¼€å¯ç”µè·æ³µ
+	hal_Oled_WR_Byte(0xAF,OLED_CMD);//ç‚¹äº®å±å¹•
 }
 
-//¹Ø±ÕOLEDÏÔÊ¾ 
+//å…³é—­OLEDæ˜¾ç¤º 
 void hal_Oled_DisPlay_Off(void)
 {
-	hal_Oled_WR_Byte(0x8D,OLED_CMD);//µçºÉ±ÃÊ¹ÄÜ
-	hal_Oled_WR_Byte(0x10,OLED_CMD);//¹Ø±ÕµçºÉ±Ã
-	hal_Oled_WR_Byte(0xAE,OLED_CMD);//¹Ø±ÕÆÁÄ»
+	hal_Oled_WR_Byte(0x8D,OLED_CMD);//ç”µè·æ³µä½¿èƒ½
+	hal_Oled_WR_Byte(0x10,OLED_CMD);//å…³é—­ç”µè·æ³µ
+	hal_Oled_WR_Byte(0xAE,OLED_CMD);//å…³é—­å±å¹•
 }
 
-//¸üĞÂÏÔ´æµ½OLED	
+//æ›´æ–°æ˜¾å­˜åˆ°OLED	
 void hal_Oled_Refresh(void)
 {
 	unsigned char i,n;
 	for(i=0;i<8;i++)
 	{
-	   hal_Oled_WR_Byte(0xb0+i,OLED_CMD); //ÉèÖÃĞĞÆğÊ¼µØÖ·
-	   hal_Oled_WR_Byte(0x00,OLED_CMD);   //ÉèÖÃµÍÁĞÆğÊ¼µØÖ·
-	   hal_Oled_WR_Byte(0x10,OLED_CMD);   //ÉèÖÃ¸ßÁĞÆğÊ¼µØÖ·
+	   hal_Oled_WR_Byte(0xb0+i,OLED_CMD); //è®¾ç½®è¡Œèµ·å§‹åœ°å€
+	   hal_Oled_WR_Byte(0x00,OLED_CMD);   //è®¾ç½®ä½åˆ—èµ·å§‹åœ°å€
+	   hal_Oled_WR_Byte(0x10,OLED_CMD);   //è®¾ç½®é«˜åˆ—èµ·å§‹åœ°å€
 	   for(n=0;n<128;n++)
 		 hal_Oled_WR_Byte(OLED_GRAM[n][i],OLED_DATA);
   }
 }
-//ÇåÆÁº¯Êı
+//æ¸…å±å‡½æ•°
 void hal_Oled_Clear(void)
 {
 	unsigned char i,n;
@@ -565,16 +565,16 @@ void hal_Oled_Clear(void)
 	{
 	   for(n=0;n<128;n++)
 			{
-			 OLED_GRAM[n][i]=0;//Çå³ıËùÓĞÊı¾İ
+			 OLED_GRAM[n][i]=0;//æ¸…é™¤æ‰€æœ‰æ•°æ®
 			}
   }
-	hal_Oled_Refresh();//¸üĞÂÏÔÊ¾
+	hal_Oled_Refresh();//æ›´æ–°æ˜¾ç¤º
 }
 
-//»­µã 
+//ç”»ç‚¹ 
 //x:0~127
 //y:0~63
-//t:1 Ìî³ä 0,Çå¿Õ	
+//t:1 å¡«å…… 0,æ¸…ç©º	
 void hal_Oled_DrawPoint(unsigned char x,unsigned char y,unsigned char t)
 {
 	unsigned char i,m,n;
@@ -590,24 +590,24 @@ void hal_Oled_DrawPoint(unsigned char x,unsigned char y,unsigned char t)
 	}
 }
 
-//»­Ïß
-//x1,y1:Æğµã×ø±ê
-//x2,y2:½áÊø×ø±ê
+//ç”»çº¿
+//x1,y1:èµ·ç‚¹åæ ‡
+//x2,y2:ç»“æŸåæ ‡
 void hal_Oled_DrawLine(unsigned char x1,unsigned char y1,unsigned char x2,unsigned char y2,unsigned char mode)
 {
 	unsigned short t; 
 	int xerr=0,yerr=0,delta_x,delta_y,distance;
 	int incx,incy,uRow,uCol;
-	delta_x=x2-x1; //¼ÆËã×ø±êÔöÁ¿ 
+	delta_x=x2-x1; //è®¡ç®—åæ ‡å¢é‡ 
 	delta_y=y2-y1;
-	uRow=x1;//»­ÏßÆğµã×ø±ê
+	uRow=x1;//ç”»çº¿èµ·ç‚¹åæ ‡
 	uCol=y1;
 	if(delta_x>0)
 	{
-		incx=1; //ÉèÖÃµ¥²½·½Ïò 
+		incx=1; //è®¾ç½®å•æ­¥æ–¹å‘ 
 	}else if(delta_x==0)
 	{
-		incx=0;//´¹Ö±Ïß 
+		incx=0;//å‚ç›´çº¿ 
 	}else 
 	{
 		incx=-1;
@@ -618,7 +618,7 @@ void hal_Oled_DrawLine(unsigned char x1,unsigned char y1,unsigned char x2,unsign
 		incy=1;
 	}else if(delta_y==0)
 	{
-		incy=0;//Ë®Æ½Ïß 
+		incy=0;//æ°´å¹³çº¿ 
 	}else 
 	{
 		incy=-1;
@@ -626,14 +626,14 @@ void hal_Oled_DrawLine(unsigned char x1,unsigned char y1,unsigned char x2,unsign
 	}
 	if(delta_x>delta_y)
 	{
-		distance=delta_x; //Ñ¡È¡»ù±¾ÔöÁ¿×ø±êÖá 
+		distance=delta_x; //é€‰å–åŸºæœ¬å¢é‡åæ ‡è½´ 
 	}else 
 	{
 		distance=delta_y;
 	}
 	for(t=0;t<distance+1;t++)
 	{
-		hal_Oled_DrawPoint(uRow,uCol,mode);//»­µã
+		hal_Oled_DrawPoint(uRow,uCol,mode);//ç”»ç‚¹
 		xerr+=delta_x;
 		yerr+=delta_y;
 		if(xerr>distance)
@@ -648,8 +648,8 @@ void hal_Oled_DrawLine(unsigned char x1,unsigned char y1,unsigned char x2,unsign
 		}
 	}
 }
-//x,y:Ô²ĞÄ×ø±ê
-//r:Ô²µÄ°ë¾¶
+//x,y:åœ†å¿ƒåæ ‡
+//r:åœ†çš„åŠå¾„
 void hal_Oled_DrawCircle(unsigned char x,unsigned char y,unsigned char r)
 {
 	int a, b,num;
@@ -668,7 +668,7 @@ void hal_Oled_DrawCircle(unsigned char x,unsigned char y,unsigned char r)
         hal_Oled_DrawPoint(x - b, y + a,1);
         
         a++;
-        num = (a * a + b * b) - r*r;//¼ÆËã»­µÄµãÀëÔ²ĞÄµÄ¾àÀë
+        num = (a * a + b * b) - r*r;//è®¡ç®—ç”»çš„ç‚¹ç¦»åœ†å¿ƒçš„è·ç¦»
         if(num > 0)
         {
             b--;
@@ -679,32 +679,32 @@ void hal_Oled_DrawCircle(unsigned char x,unsigned char y,unsigned char r)
 
 
 
-//ÔÚÖ¸¶¨Î»ÖÃÏÔÊ¾Ò»¸ö×Ö·û,°üÀ¨²¿·Ö×Ö·û
+//åœ¨æŒ‡å®šä½ç½®æ˜¾ç¤ºä¸€ä¸ªå­—ç¬¦,åŒ…æ‹¬éƒ¨åˆ†å­—ç¬¦
 //x:0~127
 //y:0~63
-//size1:Ñ¡Ôñ×ÖÌå 6x8/6x12/8x16/12x24
-//mode:0,·´É«ÏÔÊ¾;1,Õı³£ÏÔÊ¾
+//size1:é€‰æ‹©å­—ä½“ 6x8/6x12/8x16/12x24
+//mode:0,åè‰²æ˜¾ç¤º;1,æ­£å¸¸æ˜¾ç¤º
 void hal_Oled_ShowChar(unsigned char x,unsigned char y,unsigned char chr,unsigned char size1,unsigned char mode)
 {
 	unsigned char i,m,temp,size2,chr1;
 	unsigned char x0=x,y0=y;
 	if(size1==8)size2=6;
-	else size2=(size1/8+((size1%8)?1:0))*(size1/2);  //µÃµ½×ÖÌåÒ»¸ö×Ö·û¶ÔÓ¦µãÕó¼¯ËùÕ¼µÄ×Ö½ÚÊı
-	chr1=chr-' ';  //¼ÆËãÆ«ÒÆºóµÄÖµ
+	else size2=(size1/8+((size1%8)?1:0))*(size1/2);  //å¾—åˆ°å­—ä½“ä¸€ä¸ªå­—ç¬¦å¯¹åº”ç‚¹é˜µé›†æ‰€å çš„å­—èŠ‚æ•°
+	chr1=chr-' ';  //è®¡ç®—åç§»åçš„å€¼
 	for(i=0;i<size2;i++)
 	{
 		if(size1==8)
 		{
-			temp=asc2_0806[chr1][i];	//µ÷ÓÃ0806×ÖÌå
+			temp=asc2_0806[chr1][i];	//è°ƒç”¨0806å­—ä½“
 		}else if(size1==12)
         {
-			temp=asc2_1206[chr1][i];	//µ÷ÓÃ1206×ÖÌå
+			temp=asc2_1206[chr1][i];	//è°ƒç”¨1206å­—ä½“
 		}else if(size1==16)
         {
-			temp=asc2_1608[chr1][i];	 //µ÷ÓÃ1608×ÖÌå
+			temp=asc2_1608[chr1][i];	 //è°ƒç”¨1608å­—ä½“
 		}else if(size1==24)
         { 
-			temp=asc2_2412[chr1][i];	//µ÷ÓÃ2412×ÖÌå
+			temp=asc2_2412[chr1][i];	//è°ƒç”¨2412å­—ä½“
 		} 
 		else 
 		{
@@ -720,14 +720,14 @@ void hal_Oled_ShowChar(unsigned char x,unsigned char y,unsigned char chr,unsigne
 				hal_Oled_DrawPoint(x,y,!mode);
 			}
 			temp>>=1;
-			y++;	//ÒòÎªÊÇ×İÏòÉ¨Ãè£¬ËùÒÔÃ¿»­Ò»¸öµã£¬×İ×ø±ê+1
+			y++;	//å› ä¸ºæ˜¯çºµå‘æ‰«æï¼Œæ‰€ä»¥æ¯ç”»ä¸€ä¸ªç‚¹ï¼Œçºµåæ ‡+1
 		
 		}
-		x++;		//Ò»¸ö×Ö½Ú»­Íê,×İ×ø±ê+1£¬¿ªÊ¼ÏÂÒ»ÁĞÊı¾İÉ¨Ãè
-		if((size1!=8)&&((x-x0)==size1/2))	//ÅĞ¶ÏÒ»¸ö×Ö·ûx×ø±êµÄÊı¾İÊÇ·ñÈ«²¿»­Íê
+		x++;		//ä¸€ä¸ªå­—èŠ‚ç”»å®Œ,çºµåæ ‡+1ï¼Œå¼€å§‹ä¸‹ä¸€åˆ—æ•°æ®æ‰«æ
+		if((size1!=8)&&((x-x0)==size1/2))	//åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦xåæ ‡çš„æ•°æ®æ˜¯å¦å…¨éƒ¨ç”»å®Œ
 		{
-		//size1!=8ÊÇÒòÎª8*6´óĞ¡µÄ×Ö·ûÖ»ĞèÒªÉ¨ÃèÒ»´Î£¬x-x0´ú±í¼ÆËãµ±Ç°É¨ÃèµÄxÖáÎ»ÖÃ£¬size1/2ÊÇ×Ö·ûÊÇx/y=2µÄ±ÈÀı(8*6´óĞ¡³ıÍâ)
-		//±ÈÈç12*6,24*12,¶¼ÊÇ2:1µÄ±ÈÀı£¬ÄÇsizel/2¾Í¿ÉÒÔ¼ÆËã³öÒ»¸ö×Ö·ûĞèÒªÉ¨Ãè¶àÉÙ´Îx
+		//size1!=8æ˜¯å› ä¸º8*6å¤§å°çš„å­—ç¬¦åªéœ€è¦æ‰«æä¸€æ¬¡ï¼Œx-x0ä»£è¡¨è®¡ç®—å½“å‰æ‰«æçš„xè½´ä½ç½®ï¼Œsize1/2æ˜¯å­—ç¬¦æ˜¯x/y=2çš„æ¯”ä¾‹(8*6å¤§å°é™¤å¤–)
+		//æ¯”å¦‚12*6,24*12,éƒ½æ˜¯2:1çš„æ¯”ä¾‹ï¼Œé‚£sizel/2å°±å¯ä»¥è®¡ç®—å‡ºä¸€ä¸ªå­—ç¬¦éœ€è¦æ‰«æå¤šå°‘æ¬¡x
 			x=x0;y0=y0+8;
 		}
 		y=y0;
@@ -735,14 +735,14 @@ void hal_Oled_ShowChar(unsigned char x,unsigned char y,unsigned char chr,unsigne
 }
 
 
-//ÏÔÊ¾×Ö·û´®
-//x,y:Æğµã×ø±ê  
-//size1:×ÖÌå´óĞ¡ 
-//*chr:×Ö·û´®ÆğÊ¼µØÖ· 
-//mode:0,·´É«ÏÔÊ¾;1,Õı³£ÏÔÊ¾
+//æ˜¾ç¤ºå­—ç¬¦ä¸²
+//x,y:èµ·ç‚¹åæ ‡  
+//size1:å­—ä½“å¤§å° 
+//*chr:å­—ç¬¦ä¸²èµ·å§‹åœ°å€ 
+//mode:0,åè‰²æ˜¾ç¤º;1,æ­£å¸¸æ˜¾ç¤º
 void hal_Oled_ShowString(unsigned char x,unsigned char y,unsigned char *chr,unsigned char size1,unsigned char mode)
 {
-	while((*chr>=' ')&&(*chr<='~'))//ÅĞ¶ÏÊÇ²»ÊÇ·Ç·¨×Ö·û!
+	while((*chr>=' ')&&(*chr<='~'))//åˆ¤æ–­æ˜¯ä¸æ˜¯éæ³•å­—ç¬¦!
 	{
 		hal_Oled_ShowChar(x,y,*chr,size1,mode);
 		if(size1==8)x+=6;
@@ -762,12 +762,12 @@ unsigned int hal_Oled_Pow(unsigned char m,unsigned char n)
 	return result;
 }
 
-//ÏÔÊ¾Êı×Ö
-//x,y :Æğµã×ø±ê
-//num :ÒªÏÔÊ¾µÄÊı×Ö
-//len :Êı×ÖµÄÎ»Êı
-//size:×ÖÌå´óĞ¡
-//mode:0,·´É«ÏÔÊ¾;1,Õı³£ÏÔÊ¾
+//æ˜¾ç¤ºæ•°å­—
+//x,y :èµ·ç‚¹åæ ‡
+//num :è¦æ˜¾ç¤ºçš„æ•°å­—
+//len :æ•°å­—çš„ä½æ•°
+//size:å­—ä½“å¤§å°
+//mode:0,åè‰²æ˜¾ç¤º;1,æ­£å¸¸æ˜¾ç¤º
 void hal_Oled_ShowNum(unsigned char x,unsigned char y,unsigned int num,unsigned char len,unsigned char size1,unsigned char mode)
 {
 	unsigned char t,temp,m=0;
@@ -800,7 +800,7 @@ static void hal_OledConfig(void)
 	/* Enable SPI1 and GPIOA clocks */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);			//¸´ÓÃ¹¦ÄÜÊ¹ÄÜ
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);			//å¤ç”¨åŠŸèƒ½ä½¿èƒ½
 	
 	/* Configure SPI1 pins: SCK, MOSI */
 	GPIO_InitStructure.GPIO_Pin =  OLED_CLK_PIN | OLED_SDA_PIN;
@@ -808,14 +808,14 @@ static void hal_OledConfig(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	//OLED¸´Î»Òı½Å
+	//OLEDå¤ä½å¼•è„š
 	GPIO_InitStructure.GPIO_Pin = OLED_RES_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	GPIO_SetBits(GPIOA,OLED_RES_PIN);
 	
-	//OLEDÃüÁî/Êı¾İ¿ØÖÆÒı½Å
+	//OLEDå‘½ä»¤/æ•°æ®æ§åˆ¶å¼•è„š
 	GPIO_InitStructure.GPIO_Pin = OLED_DC_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -823,18 +823,18 @@ static void hal_OledConfig(void)
 	GPIO_SetBits(GPIOA,OLED_DC_PIN);
 	
 	/* SPI1 configuration */ 
-	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx; //SPI1ÉèÖÃÎªÁ½ÏßÈ«Ë«¹¤
-	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;	                     //ÉèÖÃSPI1ÎªÖ÷Ä£Ê½
-	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;                  //SPI·¢ËÍ½ÓÊÕ8Î»Ö¡½á¹¹
-	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;	 		                   //´®ĞĞÊ±ÖÓÔÚ²»²Ù×÷Ê±£¬Ê±ÖÓÎª¸ßµçÆ½
-	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;		                   //µÚ¶ş¸öÊ±ÖÓÑØ¿ªÊ¼²ÉÑùÊı¾İ
-	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;			                     //NSSĞÅºÅÓÉÈí¼ş£¨Ê¹ÓÃSSIÎ»£©¹ÜÀí
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8; //¶¨Òå²¨ÌØÂÊÔ¤·ÖÆµµÄÖµ:²¨ÌØÂÊÔ¤·ÖÆµÖµÎª8
-	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;				         //Êı¾İ´«Êä´ÓMSBÎ»¿ªÊ¼
-	SPI_InitStructure.SPI_CRCPolynomial = 7;						               //CRCÖµ¼ÆËãµÄ¶àÏîÊ½
+	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx; //SPI1è®¾ç½®ä¸ºä¸¤çº¿å…¨åŒå·¥
+	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;	                     //è®¾ç½®SPI1ä¸ºä¸»æ¨¡å¼
+	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;                  //SPIå‘é€æ¥æ”¶8ä½å¸§ç»“æ„
+	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;	 		                   //ä¸²è¡Œæ—¶é’Ÿåœ¨ä¸æ“ä½œæ—¶ï¼Œæ—¶é’Ÿä¸ºé«˜ç”µå¹³
+	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;		                   //ç¬¬äºŒä¸ªæ—¶é’Ÿæ²¿å¼€å§‹é‡‡æ ·æ•°æ®
+	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;			                     //NSSä¿¡å·ç”±è½¯ä»¶ï¼ˆä½¿ç”¨SSIä½ï¼‰ç®¡ç†
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8; //å®šä¹‰æ³¢ç‰¹ç‡é¢„åˆ†é¢‘çš„å€¼:æ³¢ç‰¹ç‡é¢„åˆ†é¢‘å€¼ä¸º8
+	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;				         //æ•°æ®ä¼ è¾“ä»MSBä½å¼€å§‹
+	SPI_InitStructure.SPI_CRCPolynomial = 7;						               //CRCå€¼è®¡ç®—çš„å¤šé¡¹å¼
 	SPI_Init(SPI1, &SPI_InitStructure);
 	/* Enable SPI1  */
-	SPI_Cmd(SPI1, ENABLE); 											  //Ê¹ÄÜSPI2ÍâÉè
+	SPI_Cmd(SPI1, ENABLE); 											  //ä½¿èƒ½SPI2å¤–è®¾
 	
  
 	
@@ -852,7 +852,7 @@ static void hal_Oled_Delay(unsigned short t)
 }
 
 
-//OLEDµÄ³õÊ¼»¯
+//OLEDçš„åˆå§‹åŒ–
 void hal_Oled_Init(void)
 {
 	hal_OledConfig();
@@ -867,8 +867,8 @@ void hal_Oled_Init(void)
 	hal_Oled_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
 	hal_Oled_WR_Byte(0x81,OLED_CMD);//--set contrast control register
 	hal_Oled_WR_Byte(0xCF,OLED_CMD);// Set SEG Output Current Brightness
-	hal_Oled_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0×óÓÒ·´ÖÃ 0xa1Õı³£
-	hal_Oled_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   0xc0ÉÏÏÂ·´ÖÃ 0xc8Õı³£
+	hal_Oled_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0å·¦å³åç½® 0xa1æ­£å¸¸
+	hal_Oled_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   0xc0ä¸Šä¸‹åç½® 0xc8æ­£å¸¸
 	hal_Oled_WR_Byte(0xA6,OLED_CMD);//--set normal display
 	hal_Oled_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
 	hal_Oled_WR_Byte(0x3f,OLED_CMD);//--1/64 duty

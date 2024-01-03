@@ -54,11 +54,11 @@ static void hal_Timer4Config(void)
 
 /*******************************************************************************
 * Function Name  : hal_CreatTimer(TIMER_ID_TYPEDEF id,void (*proc)(void), unsigned short Period,unsigned char state)
-* Description    : ´´½¨¶¨Ê±Æ÷ 
-* Input          : - id£º¶¨Ê±Æ÷ID
-*									- (*proc)() º¯ÊıÖ¸Õë 
-*									- Period ¶¨Ê±ÖÜÆÚ£¬µ¥Î»10ms
-* 								- state ¶¨Ê±Æ÷³õÊ¼×´Ì¬
+* Description    : åˆ›å»ºå®šæ—¶å™¨ 
+* Input          : - idï¼šå®šæ—¶å™¨ID
+*									- (*proc)() å‡½æ•°æŒ‡é’ˆ 
+*									- Period å®šæ—¶å‘¨æœŸï¼Œå•ä½10ms
+* 								- state å®šæ—¶å™¨åˆå§‹çŠ¶æ€
 * Output         : None
 * Return         : None
 * Attention		 	 : None
@@ -75,16 +75,16 @@ void hal_CreatTimer(TIMER_ID_TYPEDEF id,void (*proc)(void), unsigned short Perio
 
 /*******************************************************************************
 * Function Name  : unsigned char hal_CtrlTimerAction(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF sta)
-* Description    : ¿ØÖÆ¶¨Ê±Æ÷¶¯×÷ 
-* Input          : - id£º¶¨Ê±Æ÷ID
-*								 	 - sta ¶¨Ê±Æ÷×´Ì¬
+* Description    : æ§åˆ¶å®šæ—¶å™¨åŠ¨ä½œ 
+* Input          : - idï¼šå®šæ—¶å™¨ID
+*								 	 - sta å®šæ—¶å™¨çŠ¶æ€
 * Output         : None
 * Return         : None
 * Attention		 	 : None
 *******************************************************************************/
 TIMER_RESULT_TYPEDEF hal_CtrlTimerAction(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF sta)
 {
-	if(Stu_Timer[id].func)		//ÅĞ¶Ï¶¨Ê±Æ÷ÊÇ·ñ´æÔÚ
+	if(Stu_Timer[id].func)		//åˆ¤æ–­å®šæ—¶å™¨æ˜¯å¦å­˜åœ¨
 	{
 		Stu_Timer[id].state = sta;
 		return T_SUCCESS;
@@ -96,16 +96,16 @@ TIMER_RESULT_TYPEDEF hal_CtrlTimerAction(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF
 
 /*******************************************************************************
 * Function Name  : TIMER_STATE_RESULT_TYPEDEF	hal_GetTimerState(TIMER_ID_TYPEDEF id)
-* Description    : »ñÈ¡¶¨Ê±Æ÷×´Ì¬
-* Input          : - id£º¶¨Ê±Æ÷ID
-*								 	 - sta ¶¨Ê±Æ÷×´Ì¬
+* Description    : è·å–å®šæ—¶å™¨çŠ¶æ€
+* Input          : - idï¼šå®šæ—¶å™¨ID
+*								 	 - sta å®šæ—¶å™¨çŠ¶æ€
 * Output         : None
 * Return         : None
 * Attention		 	 : None
 *******************************************************************************/
 TIMER_STATE_TYPEDEF	hal_GetTimerState(TIMER_ID_TYPEDEF id)
 {
-	if(Stu_Timer[id].func)		//ÅĞ¶Ï¶¨Ê±Æ÷ÊÇ·ñ´æÔÚ
+	if(Stu_Timer[id].func)		//åˆ¤æ–­å®šæ—¶å™¨æ˜¯å¦å­˜åœ¨
 	{
 		return Stu_Timer[id].state;
 	}else
@@ -117,8 +117,8 @@ TIMER_STATE_TYPEDEF	hal_GetTimerState(TIMER_ID_TYPEDEF id)
 
 /*******************************************************************************
 * Function Name  : hal_DeleteTimer(TIMER_ID_TYPEDEF id)
-* Description    : É¾³ı¶¨Ê±Æ÷ 
-* Input          : - id£º¶¨Ê±Æ÷ID
+* Description    : åˆ é™¤å®šæ—¶å™¨ 
+* Input          : - idï¼šå®šæ—¶å™¨ID
 *								 
 * Output         : None
 * Return         : None
@@ -142,16 +142,16 @@ TIMER_RESULT_TYPEDEF hal_DeleteTimer(TIMER_ID_TYPEDEF id)
 
 /*******************************************************************************
 * Function Name  : hal_ResetTimer(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF sta)
-* Description    : ¸´Î»¶¨Ê±Æ÷×´Ì¬ºÍ¼ÆÊ±Ê±¼ä
-* Input          : - id£º¶¨Ê±Æ÷ID
-*								 	 - sta ¶¨Ê±Æ÷×´Ì¬
+* Description    : å¤ä½å®šæ—¶å™¨çŠ¶æ€å’Œè®¡æ—¶æ—¶é—´
+* Input          : - idï¼šå®šæ—¶å™¨ID
+*								 	 - sta å®šæ—¶å™¨çŠ¶æ€
 * Output         : None
 * Return         : None
 * Attention		 	 : None
 *******************************************************************************/
 TIMER_RESULT_TYPEDEF hal_ResetTimer(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF sta)
 {
-	if(Stu_Timer[id].func)		//ÅĞ¶Ï¶¨Ê±Æ÷ÊÇ·ñ´æÔÚ
+	if(Stu_Timer[id].func)		//åˆ¤æ–­å®šæ—¶å™¨æ˜¯å¦å­˜åœ¨
 	{
 		Stu_Timer[id].state = sta;
 		Stu_Timer[id].CurrentCount = 0;
@@ -164,7 +164,7 @@ TIMER_RESULT_TYPEDEF hal_ResetTimer(TIMER_ID_TYPEDEF id,TIMER_STATE_TYPEDEF sta)
 }
 /*******************************************************************************
 * Function Name  : static void Hal_TimerHandle(void)
-* Description    : ¶¨Ê±Æ÷ÖĞ¶Ï¼ÆÊ±º¯Êı
+* Description    : å®šæ—¶å™¨ä¸­æ–­è®¡æ—¶å‡½æ•°
 * Input          : None
 * Output         : None
 * Return         : None

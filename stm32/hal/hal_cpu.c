@@ -17,44 +17,44 @@ void hal_CPUInit(void)
 
 static void hal_CoreClockInit(void)
 {	
-	SysTick_Config(SystemCoreClock / 100);			//Ê¹ÓÃ48M×÷ÎªÏµÍ³Ê±ÖÓ£¬ÄÇÃ´¼ÆÊıÆ÷¼õ1µÈÓÚ1/48M(ms), (1/48000000hz)*(48000000/100)=0.01S=10ms
+	SysTick_Config(SystemCoreClock / 100);			//ä½¿ç”¨48Mä½œä¸ºç³»ç»Ÿæ—¶é’Ÿï¼Œé‚£ä¹ˆè®¡æ•°å™¨å‡1ç­‰äº1/48M(ms), (1/48000000hz)*(48000000/100)=0.01S=10ms
 }
 
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   hal_getprimask						                                                           
-*  @ÃèÊö     »ñÈ¡CPU×ÜÖĞ¶Ï×´Ì¬							                                     
-*  @²ÎÊı     ÎŞ
-*  @·µ»ØÖµ   0-×ÜÖĞ¶Ï¹Ø±Õ 1-×ÜÖĞ¶Ï´ò¿ª
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   hal_getprimask						                                                           
+*  @æè¿°     è·å–CPUæ€»ä¸­æ–­çŠ¶æ€							                                     
+*  @å‚æ•°     æ— 
+*  @è¿”å›å€¼   0-æ€»ä¸­æ–­å…³é—­ 1-æ€»ä¸­æ–­æ‰“å¼€
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 static unsigned char hal_getprimask(void)
 {
-	return (!__get_PRIMASK());		//0ÊÇÖĞ¶Ï´ò¿ª£¬1ÊÇÖĞ¶Ï¹Ø±Õ£¬ËùÒÔÒªÈ¡·´
+	return (!__get_PRIMASK());		//0æ˜¯ä¸­æ–­æ‰“å¼€ï¼Œ1æ˜¯ä¸­æ–­å…³é—­ï¼Œæ‰€ä»¥è¦å–å
 }
 
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   hal_CPU_Critical_Control						                                                           
-*  @ÃèÊö     CPUÁÙ½ç´¦Àí¿ØÖÆ						                                     
-*  @²ÎÊı     cmd-¿ØÖÆÃüÁî  *pSta-×ÜÖĞ¶Ï×´Ì¬
-*  @·µ»ØÖµ   ÎŞ
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   hal_CPU_Critical_Control						                                                           
+*  @æè¿°     CPUä¸´ç•Œå¤„ç†æ§åˆ¶						                                     
+*  @å‚æ•°     cmd-æ§åˆ¶å‘½ä»¤  *pSta-æ€»ä¸­æ–­çŠ¶æ€
+*  @è¿”å›å€¼   æ— 
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 static void hal_CPU_Critical_Control(CPU_EA_TYPEDEF cmd,unsigned char *pSta)
 {
 	if(cmd == CPU_ENTER_CRITICAL)
 	{
-		*pSta = hal_getprimask();	//±£´æÖĞ¶Ï×´Ì¬
-		__disable_irq();		//¹ØCPU×ÜÖĞ¶Ï
+		*pSta = hal_getprimask();	//ä¿å­˜ä¸­æ–­çŠ¶æ€
+		__disable_irq();		//å…³CPUæ€»ä¸­æ–­
 	}else if(cmd == CPU_EXIT_CRITICAL)
 	{
 		if(*pSta)
 		{
-			__enable_irq();		//´ò¿ªÖĞ¶Ï
+			__enable_irq();		//æ‰“å¼€ä¸­æ–­
 		}else 
 		{
-			__disable_irq();	//¹Ø±ÕÖĞ¶Ï
+			__disable_irq();	//å…³é—­ä¸­æ–­
 		}
 	}
 }
@@ -63,5 +63,5 @@ static void hal_CPU_Critical_Control(CPU_EA_TYPEDEF cmd,unsigned char *pSta)
 void SysTick_Handler(void)
 {
 	OS_ClockInterruptHandle();
-	 //¶¨Ê±ÖĞ¶Ï´¦Àí
+	 //å®šæ—¶ä¸­æ–­å¤„ç†
 }
