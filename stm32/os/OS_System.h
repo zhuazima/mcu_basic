@@ -14,7 +14,7 @@ extern unsigned short S_QueueDataLen(unsigned char **Head, unsigned char **Tail,
 #define QueueDataLen(x)	   S_QueueDataLen((unsigned char**)&(x).Head,(unsigned char**)&(x).Tail,sizeof((x).Buff))  
 
 
-/* ¶ÓÁĞ½á¹¹Ìå¶¨Òå,¶¨Òå²»Í¬´óĞ¡µÄ¶ÓÁĞ */
+/* é˜Ÿåˆ—ç»“æ„ä½“å®šä¹‰,å®šä¹‰ä¸åŒå¤§å°çš„é˜Ÿåˆ— */
 typedef struct
 {
 	unsigned char *Head; 
@@ -40,15 +40,15 @@ typedef struct{unsigned char *Head; unsigned char *Tail; unsigned char Buff[1024
 
 typedef enum
 {
-	CPU_ENTER_CRITICAL,		//CPU½øÈëÁÙ½ç
-	CPU_EXIT_CRITICAL,		//CPUÍË³öÁÙ½ç
+	CPU_ENTER_CRITICAL,		//CPUè¿›å…¥ä¸´ç•Œ
+	CPU_EXIT_CRITICAL,		//CPUé€€å‡ºä¸´ç•Œ
 }CPU_EA_TYPEDEF;
 
-//¶¨ÒåÒ»¸öCPUÖĞ¶Ï¿ØÖÆ»Øµ÷º¯ÊıÖ¸Õë,±ğÃûCPUInterrupt_CallBack_t,
+//å®šä¹‰ä¸€ä¸ªCPUä¸­æ–­æ§åˆ¶å›è°ƒå‡½æ•°æŒ‡é’ˆ,åˆ«åCPUInterrupt_CallBack_t,
 typedef void (*CPUInterrupt_CallBack_t)(CPU_EA_TYPEDEF cmd,unsigned char *pSta);
 
 
-//ÏµÍ³ÈÎÎñID
+//ç³»ç»Ÿä»»åŠ¡ID
 typedef enum
 {
 	OS_TASK1,
@@ -61,24 +61,24 @@ typedef enum
 }OS_TaskIDTypeDef;
 
 
-//ÏµÍ³ÈÎÎñÔËĞĞ×´Ì¬,ÔİÊ±Ã»ÓÃµ½
+//ç³»ç»Ÿä»»åŠ¡è¿è¡ŒçŠ¶æ€,æš‚æ—¶æ²¡ç”¨åˆ°
 typedef enum
 {
-	OS_SLEEP,			//ÈÎÎñĞİÃß
-	OS_RUN=!OS_SLEEP	//ÈÎÎñÔËĞĞ
+	OS_SLEEP,			//ä»»åŠ¡ä¼‘çœ 
+	OS_RUN=!OS_SLEEP	//ä»»åŠ¡è¿è¡Œ
 }OS_TaskStatusTypeDef;
 
-//ÏµÍ³ÈÎÎñ½á¹¹Ìå
+//ç³»ç»Ÿä»»åŠ¡ç»“æ„ä½“
 typedef struct
 {
-	void (*task)(void);					//ÈÎÎñº¯ÊıÖ¸Õë
-	OS_TaskStatusTypeDef RunFlag;		//ÈÎÎñÔËĞĞ×´Ì¬
-	unsigned short	RunPeriod;			//ÈÎÎñµ÷¶ÈÆµÂÊ
-	unsigned short RunTimer;			//ÈÎÎñµ÷¶È¼ÆÊ±Æ÷
+	void (*task)(void);					//ä»»åŠ¡å‡½æ•°æŒ‡é’ˆ
+	OS_TaskStatusTypeDef RunFlag;		//ä»»åŠ¡è¿è¡ŒçŠ¶æ€
+	unsigned short	RunPeriod;			//ä»»åŠ¡è°ƒåº¦é¢‘ç‡
+	unsigned short RunTimer;			//ä»»åŠ¡è°ƒåº¦è®¡æ—¶å™¨
 }OS_TaskTypeDef;
 
 
-/*	º¯ÊıÉùÃ÷ */ 
+/*	å‡½æ•°å£°æ˜ */ 
 /*******************************************************************************/
 void OS_CPUInterruptCBSRegister(CPUInterrupt_CallBack_t pCPUInterruptCtrlCBS);
 void OS_ClockInterruptHandle(void);

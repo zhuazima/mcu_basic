@@ -6,11 +6,11 @@ CPUInterrupt_CallBack_t CPUInterrupptCtrlCBS;
 
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   OS_CPUInterruptCBSRegister						                                                           
-*  @ÃèÊö     ×¢²áCPUÖĞ¶Ï¿ØÖÆº¯Êı								                                     
-*  @²ÎÊı     pCPUInterruptCtrlCBS-CPUÖĞ¶Ï¿ØÖÆ»Øµ÷º¯ÊıµØÖ·
-*  @·µ»ØÖµ   ÎŞ
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   OS_CPUInterruptCBSRegister						                                                           
+*  @æè¿°     æ³¨å†ŒCPUä¸­æ–­æ§åˆ¶å‡½æ•°								                                     
+*  @å‚æ•°     pCPUInterruptCtrlCBS-CPUä¸­æ–­æ§åˆ¶å›è°ƒå‡½æ•°åœ°å€
+*  @è¿”å›å€¼   æ— 
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 void OS_CPUInterruptCBSRegister(CPUInterrupt_CallBack_t pCPUInterruptCtrlCBS)
 {
@@ -21,11 +21,11 @@ void OS_CPUInterruptCBSRegister(CPUInterrupt_CallBack_t pCPUInterruptCtrlCBS)
 }
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   OS_TaskInit					                                                           
-*  @ÃèÊö     ÏµÍ³ÈÎÎñ³õÊ¼»¯							                                     
-*  @²ÎÊı     ÎŞ
-*  @·µ»ØÖµ   ÎŞ
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   OS_TaskInit					                                                           
+*  @æè¿°     ç³»ç»Ÿä»»åŠ¡åˆå§‹åŒ–							                                     
+*  @å‚æ•°     æ— 
+*  @è¿”å›å€¼   æ— 
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 void OS_TaskInit(void)
 {
@@ -42,11 +42,11 @@ void OS_TaskInit(void)
 
 /*******************************************************************************
 * Function Name  : void OS_CreatTask(unsigned char ID, void (*proc)(void), OS_TIME_TYPEDEF TimeDly, bool flag)
-* Description    : ´´½¨ÈÎÎñ 
-* Input          : - ID£ºÈÎÎñID
-*					- (*proc)() ÓÃ»§º¯ÊıÈë¿ÚµØÖ· 
-*					- TimeDly ÈÎÎñÖ´ĞĞÆµÂÊ£¬µ¥Î»ms
-* 					- flag ÈÎÎñ¾ÍĞ÷×´Ì¬  OS_SLEEP-ĞİÃß OS_RUN-ÔËĞĞ 
+* Description    : åˆ›å»ºä»»åŠ¡ 
+* Input          : - IDï¼šä»»åŠ¡ID
+*					- (*proc)() ç”¨æˆ·å‡½æ•°å…¥å£åœ°å€ 
+*					- TimeDly ä»»åŠ¡æ‰§è¡Œé¢‘ç‡ï¼Œå•ä½ms
+* 					- flag ä»»åŠ¡å°±ç»ªçŠ¶æ€  OS_SLEEP-ä¼‘çœ  OS_RUN-è¿è¡Œ 
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -64,24 +64,24 @@ void OS_CreatTask(unsigned char ID, void (*proc)(void), unsigned short Period, O
 
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   OS_ClockInterruptHandle						                                                           
-*  @ÃèÊö     ÏµÍ³ÈÎÎñµ÷¶Èº¯Êı								                                     
-*  @²ÎÊı     ÎŞ
-*  @·µ»ØÖµ   ÎŞ   
-*  @×¢Òâ     ÎªÁË±£Ö¤ÈÎÎñÊµÊ±ĞÔ£¬Õâ¸ö±ØĞë·ÅÔÚ10msµÄ¶¨Ê±Æ÷»òÏµÍ³Ê±ÖÓÖĞ¶Ïº¯ÊıÀï
+*  @å‡½æ•°å   OS_ClockInterruptHandle						                                                           
+*  @æè¿°     ç³»ç»Ÿä»»åŠ¡è°ƒåº¦å‡½æ•°								                                     
+*  @å‚æ•°     æ— 
+*  @è¿”å›å€¼   æ—    
+*  @æ³¨æ„     ä¸ºäº†ä¿è¯ä»»åŠ¡å®æ—¶æ€§ï¼Œè¿™ä¸ªå¿…é¡»æ”¾åœ¨10msçš„å®šæ—¶å™¨æˆ–ç³»ç»Ÿæ—¶é’Ÿä¸­æ–­å‡½æ•°é‡Œ
 ********************************************************************************************************/
 void OS_ClockInterruptHandle(void)
 {
 	unsigned char i;
-	for(i=0; i<OS_TASK_SUM; i++)	//Õâ¸öÑ­»·ÊÇ¶ÔËùÓĞµÄÈÎÎñÖ´ĞĞÒ»´ÎÒÔÏÂ²Ù×÷¡£
+	for(i=0; i<OS_TASK_SUM; i++)	//è¿™ä¸ªå¾ªç¯æ˜¯å¯¹æ‰€æœ‰çš„ä»»åŠ¡æ‰§è¡Œä¸€æ¬¡ä»¥ä¸‹æ“ä½œã€‚
 	{
-		if(OS_Task[i].task)	//Í¨¹ıtaskº¯ÊıÖ¸ÕëÖ¸Ïò²»µÈÓÚ0À´ÅĞ¶ÏÈÎÎñÊÇ·ñ±»´´½¨
+		if(OS_Task[i].task)	//é€šè¿‡taskå‡½æ•°æŒ‡é’ˆæŒ‡å‘ä¸ç­‰äº0æ¥åˆ¤æ–­ä»»åŠ¡æ˜¯å¦è¢«åˆ›å»º
 		{					
 			OS_Task[i].RunTimer++;
-			if(OS_Task[i].RunTimer >= OS_Task[i].RunPeriod)	//ÅĞ¶Ï¼ÆÊ±Æ÷ÖµÊÇ·ñµ½´ïÈÎÎñĞèÒªÖ´ĞĞµÄÊ±¼ä
+			if(OS_Task[i].RunTimer >= OS_Task[i].RunPeriod)	//åˆ¤æ–­è®¡æ—¶å™¨å€¼æ˜¯å¦åˆ°è¾¾ä»»åŠ¡éœ€è¦æ‰§è¡Œçš„æ—¶é—´
 			{
 				OS_Task[i].RunTimer = 0;
-				OS_Task[i].RunFlag = OS_RUN;//°ÑÈÎÎñµÄ×´Ì¬ÉèÖÃ³ÉÖ´ĞĞ£¬ÈÎÎñµ÷¶Èº¯Êı»áÒ»Ö±ÅĞ¶ÏÕâ¸ö±äÁ¿µÄÖµ£¬Èç¹ûÊÇOS_RUN¾Í»áÖ´ĞĞtaskÖ¸ÏòµÄº¯Êı¡£
+				OS_Task[i].RunFlag = OS_RUN;//æŠŠä»»åŠ¡çš„çŠ¶æ€è®¾ç½®æˆæ‰§è¡Œï¼Œä»»åŠ¡è°ƒåº¦å‡½æ•°ä¼šä¸€ç›´åˆ¤æ–­è¿™ä¸ªå˜é‡çš„å€¼ï¼Œå¦‚æœæ˜¯OS_RUNå°±ä¼šæ‰§è¡ŒtaskæŒ‡å‘çš„å‡½æ•°ã€‚
 			}
 			
 		}
@@ -91,7 +91,7 @@ void OS_ClockInterruptHandle(void)
 
 /*******************************************************************************
 * Function Name  : void OS_Start(void)
-* Description    : ¿ªÊ¼ÈÎÎñ 
+* Description    : å¼€å§‹ä»»åŠ¡ 
 * Input          : None
 * Output         : None
 * Return         : None
@@ -116,8 +116,8 @@ void OS_Start(void)
 
 /*******************************************************************************
 * Function Name  : void OS_TaskGetUp(OS_TaskIDTypeDef taskID)
-* Description    : »½ĞÑÒ»¸öÈÎÎñ
-* Input          : - taskID£ºĞèÒª±»»½ĞÑÈÎÎñµÄID
+* Description    : å”¤é†’ä¸€ä¸ªä»»åŠ¡
+* Input          : - taskIDï¼šéœ€è¦è¢«å”¤é†’ä»»åŠ¡çš„ID
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -138,8 +138,8 @@ void OS_TaskGetUp(OS_TaskIDTypeDef taskID)
 
 /*******************************************************************************
 * Function Name  : void OS_TaskSleep(OS_TaskIDTypeDef taskID)
-* Description    : ¹ÒÆğÒ»¸öÈÎÎñ£¬ÈÃÒ»¸öÈÎÎñ½øÈëË¯Ãß×´Ì¬£¬¸Ãº¯ÊıÔİÊ±Ã»ÓÃµ½
-* Input          : - taskID£ºĞèÒª±»¹ÒÆğÈÎÎñµÄID
+* Description    : æŒ‚èµ·ä¸€ä¸ªä»»åŠ¡ï¼Œè®©ä¸€ä¸ªä»»åŠ¡è¿›å…¥ç¡çœ çŠ¶æ€ï¼Œè¯¥å‡½æ•°æš‚æ—¶æ²¡ç”¨åˆ°
+* Input          : - taskIDï¼šéœ€è¦è¢«æŒ‚èµ·ä»»åŠ¡çš„ID
 * Output         : None
 * Return         : None
 * Attention		 : None
@@ -159,11 +159,11 @@ void OS_TaskSleep(OS_TaskIDTypeDef taskID)
 }
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   S_QueueEmpty						                                                           
-*  @ÃèÊö     Çå¿ÕÒ»¸ö¶ÓÁĞ								                                     
-*  @²ÎÊı     Head-¶ÓÁĞÍ·µØÖ·,  Tail-¶ÓÁĞÎ²µØÖ·,   HBuff-¶ÓÁĞ»º´æ
-*  @·µ»ØÖµ   ÎŞ   
-*  @×¢Òâ    ÎŞ
+*  @å‡½æ•°å   S_QueueEmpty						                                                           
+*  @æè¿°     æ¸…ç©ºä¸€ä¸ªé˜Ÿåˆ—								                                     
+*  @å‚æ•°     Head-é˜Ÿåˆ—å¤´åœ°å€,  Tail-é˜Ÿåˆ—å°¾åœ°å€,   HBuff-é˜Ÿåˆ—ç¼“å­˜
+*  @è¿”å›å€¼   æ—    
+*  @æ³¨æ„    æ— 
 ********************************************************************************************************/
 void S_QueueEmpty(unsigned char **Head, unsigned char **Tail, unsigned char *HBuff)
 {
@@ -172,11 +172,11 @@ void S_QueueEmpty(unsigned char **Head, unsigned char **Tail, unsigned char *HBu
 }
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   S_QueueDataIn						                                                           
-*  @ÃèÊö     ÊäÈëÒ»¸ö×Ö½ÚÊı¾İ½ø¶ÓÁĞ								                                     
-*  @²ÎÊı     Head-¶ÓÁĞÍ·µØÖ·,  Tail-¶ÓÁĞÎ²µØÖ·,   HBuff-¶ÓÁĞ»º´æ
-*  @·µ»ØÖµ   ÎŞ   
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   S_QueueDataIn						                                                           
+*  @æè¿°     è¾“å…¥ä¸€ä¸ªå­—èŠ‚æ•°æ®è¿›é˜Ÿåˆ—								                                     
+*  @å‚æ•°     Head-é˜Ÿåˆ—å¤´åœ°å€,  Tail-é˜Ÿåˆ—å°¾åœ°å€,   HBuff-é˜Ÿåˆ—ç¼“å­˜
+*  @è¿”å›å€¼   æ—    
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 void S_QueueDataIn(unsigned char **Head, unsigned char **Tail, unsigned char *HBuff, unsigned short Len, unsigned char *HData, unsigned short DataLen)
 {	
@@ -206,11 +206,11 @@ void S_QueueDataIn(unsigned char **Head, unsigned char **Tail, unsigned char *HB
 }
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   S_QueueDataOut						                                                           
-*  @ÃèÊö     ´Ó¶ÓÁĞÀïÈ¡³öÒ»¸öÊı¾İ								                                     
-*  @²ÎÊı     Head-¶ÓÁĞÍ·µØÖ·,  Tail-¶ÓÁĞÎ²µØÖ·,   HBuff-¶ÓÁĞ»º´æ
-*  @·µ»ØÖµ   È¡³öµÄÊı¾İ   
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   S_QueueDataOut						                                                           
+*  @æè¿°     ä»é˜Ÿåˆ—é‡Œå–å‡ºä¸€ä¸ªæ•°æ®								                                     
+*  @å‚æ•°     Head-é˜Ÿåˆ—å¤´åœ°å€,  Tail-é˜Ÿåˆ—å°¾åœ°å€,   HBuff-é˜Ÿåˆ—ç¼“å­˜
+*  @è¿”å›å€¼   å–å‡ºçš„æ•°æ®   
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 unsigned char S_QueueDataOut(unsigned char **Head, unsigned char **Tail, unsigned char *HBuff, unsigned short Len, unsigned char *Data)
 {					   
@@ -236,11 +236,11 @@ unsigned char S_QueueDataOut(unsigned char **Head, unsigned char **Tail, unsigne
 }
 
 /********************************************************************************************************
-*  @º¯ÊıÃû   S_QueueDataLen						                                                           
-*  @ÃèÊö     ÅĞ¶Ï¶ÓÁĞÀïÊı¾İµÄ³¤¶È							                                     
-*  @²ÎÊı     Head-¶ÓÁĞÍ·µØÖ·,  Tail-¶ÓÁĞÎ²µØÖ·,   HBuff-¶ÓÁĞ»º´æ
-*  @·µ»ØÖµ   ¶ÓÁĞÀïÓĞÊı¾İ¸öÊı
-*  @×¢Òâ     ÎŞ
+*  @å‡½æ•°å   S_QueueDataLen						                                                           
+*  @æè¿°     åˆ¤æ–­é˜Ÿåˆ—é‡Œæ•°æ®çš„é•¿åº¦							                                     
+*  @å‚æ•°     Head-é˜Ÿåˆ—å¤´åœ°å€,  Tail-é˜Ÿåˆ—å°¾åœ°å€,   HBuff-é˜Ÿåˆ—ç¼“å­˜
+*  @è¿”å›å€¼   é˜Ÿåˆ—é‡Œæœ‰æ•°æ®ä¸ªæ•°
+*  @æ³¨æ„     æ— 
 ********************************************************************************************************/
 unsigned short S_QueueDataLen(unsigned char **Head, unsigned char **Tail, unsigned short Len)
 {
