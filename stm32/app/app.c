@@ -15,6 +15,7 @@
 #include "app.h"
 
 
+
 Queue8 RFDRcvMsg;	//RFD接收队列
 Queue8 DtcTriggerIDMsg;	//触发的探测器ID队列
 
