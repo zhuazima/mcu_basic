@@ -892,3 +892,23 @@ void hal_Oled_Init(void)
 
 
 
+
+
+
+// /**
+//  * @brief  对ZJY096S0700WG01显示器的某一点以某种颜色进行填充
+//  * @param  usX ：在特定扫描方向下该点的X坐标
+//  * @param  usY ：在特定扫描方向下该点的Y坐标
+//  * @param  Color ：需要画的颜色
+//  * @retval 无
+//  */
+// void zjy096s_DrawPixel ( unsigned short usX, unsigned short usY ,unsigned short Color)	
+// {	
+// 	if ( ( usX < OLED_HORiZON_LENGTH ) && ( usY < OLED_VERTICAL_LENGTH ) )
+//   {
+// 		ILI9341_SetCursor ( usX, usY );
+		
+// 		ILI9341_FillColor ( 1, Color );
+// 	}
+// }
+

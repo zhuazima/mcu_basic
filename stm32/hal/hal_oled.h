@@ -9,7 +9,8 @@
 #ifndef __HAL_OLED_H
 #define __HAL_OLED_H 
 
-
+#define OLED_HORiZON_LENGTH    128
+#define OLED_VERTICAL_LENGTH    64
 
 
 
@@ -61,6 +62,7 @@ void hal_Oled_ClearArea(unsigned char x,unsigned char y,unsigned char sizex,unsi
 void hal_Oled_DisPlay_On(void);
 void hal_Oled_DisPlay_Off(void);
 
+// void zjy096s_DrawPixel ( unsigned short usX, unsigned short usY ,unsigned short Color);
 
 
 

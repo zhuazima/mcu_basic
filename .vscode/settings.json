@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "wifi.h": "c"
+        "wifi.h": "c",
+        "lv_port_disp.h": "c",
+        "stdbool.h": "c",
+        "lvgl.h": "c",
+        "hal_led.h": "c",
+        "hal_oled.h": "c"
     }
 }
