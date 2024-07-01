@@ -145,7 +145,7 @@ static void hal_keyConfig(void)
  
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB |RCC_APB2Periph_AFIO, ENABLE);
 	
- GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+    GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 	
 	GPIO_InitStructure.GPIO_Pin = K1_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
