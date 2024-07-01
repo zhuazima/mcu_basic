@@ -135,7 +135,7 @@ typedef struct SYSTEM_TIME
 
 void AppInit(void);
 void AppProc(void);
-void mcu_all_dp_update();
+void mcu_all_dp_update(void);
 
 #endif
 

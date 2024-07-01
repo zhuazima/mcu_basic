@@ -108,10 +108,8 @@ void hal_RFDProc(void)
 							while(QueueDataOut(RFDBuff, &Temp))
 							{
 									Num = 8;
-								
 									while(Num--)
 									{
-											
 											if(Dsta)
 											{
 													//1
@@ -288,9 +286,6 @@ void hal_RFDProc(void)
 							}
 					}
 		}
-		
-			
-		
 }
 
 

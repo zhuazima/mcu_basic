@@ -44,7 +44,7 @@
 void hal_Oled_ClearPoint(unsigned char x,unsigned char y);
 void hal_Oled_ColorTurn(unsigned char i);
 void hal_Oled_DisplayTurn(unsigned char i);
-void hal_Oled_WR_Byte(unsigned char dat,unsigned char mode);
+static void hal_Oled_WR_Byte(unsigned char dat,unsigned char mode);
 void hal_Oled_Refresh(void);
 void hal_Oled_Clear(void);
 void hal_Oled_DrawPoint(unsigned char x,unsigned char y,unsigned char t);

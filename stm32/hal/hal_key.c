@@ -131,10 +131,7 @@ void hal_KeyProc(void)
 				KeyScanCBS((KEY_VALUE_TYPEDEF)keys);
 			}
 		}
-	 
 	}
-	
-
 }
 
 

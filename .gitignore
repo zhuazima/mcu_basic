@@ -8,6 +8,7 @@
 *.axf
 *.htm
 *.crf
+*.dep
 .mdk/
 .mdk/*
 
@@ -17,6 +18,7 @@
 *.ilk
 *.map
 *.exp
+*.lst
 
 # Precompiled Headers
 *.gch

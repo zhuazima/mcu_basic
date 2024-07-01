@@ -2130,28 +2130,12 @@ static void stgMenu_FactorySettingsCBS(void)
 //按键回调函数
 static void KeyEventHandle(KEY_VALUE_TYPEDEF keys)
 {
-	if(!ScreenState)
+
+	if(keys == KEY1_CLICK_RELEASE)
 	{
-		ScreeControl(1);
-	}else
-	{
-		pModeMenu->keyVal = keys;
-		if((pModeMenu->menuPos!=DESKTOP_MENU_POS) 
-			&&(pModeMenu->menuPos!=STG_WIFI_MENU_POS))
-			{
-				SetupMenuTimeOutCnt = 0;
-			}
-		PutoutScreenTiemr = 0;
+		LedMsgInput(LED1,LED_LIGHT_100MS,1);
 	}
-
-
-/////////////////////////////////////////////
-	// if(keys == KEY1_CLICK_RELEASE)
-	// {
-	// 	LedMsgInput(LED1,LED_LIGHT_100MS,1);
-	// }
 		
-/////////////////////////////////////////////
 }
 
 
@@ -2222,7 +2206,7 @@ static void ServerEventHandle(WIFI_MSG_TYPE type,unsigned char *pData)
 	}
 }
 
-void mcu_all_dp_update()
+void mcu_all_dp_update(void)
 {
 
   mcu_dp_enum_update(DPID_MASTER_MODE,pStuSystemMode->ID,STR_GATEWAY_ITSELF_ID,my_strlen(STR_GATEWAY_ITSELF_ID)); //枚举型数据上报;
