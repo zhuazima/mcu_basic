@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1587,6 +1587,13 @@
         </Group>
         <Group>
           <GroupName>LVGL_App</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_example_btn_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\examples\widgets\btn\lv_example_btn_1.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

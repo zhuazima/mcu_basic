@@ -5,6 +5,7 @@
         "stdbool.h": "c",
         "lvgl.h": "c",
         "hal_led.h": "c",
-        "hal_oled.h": "c"
+        "hal_oled.h": "c",
+        "lv_port_indev.h": "c"
     }
 }

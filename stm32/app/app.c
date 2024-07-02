@@ -14,6 +14,12 @@
 #include "protocol.h"
 #include "app.h"
 
+#include "lvgl.h"
+#include "lv_port_disp.h"
+#include "lv_port_indev.h"
+#include "lv_examples.h"
+
+
 
 
 Queue8 RFDRcvMsg;	//RFD接收队列
@@ -2234,6 +2240,5 @@ static void ScreeControl(unsigned char cmd)
 		}
 	}
 }
-
 
 
