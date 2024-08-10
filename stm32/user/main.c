@@ -20,21 +20,18 @@
 int main(void)
 {
 
-	// hal_CPUInit();
-	// OS_TaskInit();
-	// hal_TimeInit();
+	hal_CPUInit();
+	OS_TaskInit();
+	hal_TimeInit();
 	
-	// hal_LedInit();
-	// OS_CreatTask(OS_TASK1,hal_LedProc,1,OS_RUN);
+	hal_LedInit();
+	OS_CreatTask(OS_TASK1,hal_LedProc,1,OS_RUN);
 
-	// hal_KeyInit();
-	// OS_CreatTask(OS_TASK2,hal_KeyProc,1,OS_RUN);
+	hal_KeyInit();
+	OS_CreatTask(OS_TASK2,hal_KeyProc,1,OS_RUN);
 
-	// AppInit();
-
-	// OS_Start();
-
-
+	AppInit();
+	OS_Start();
 
     //lvgl test
 	// lv_init();          	//lv 系统初始化
@@ -43,8 +40,5 @@ int main(void)
 	// lv_port_disp_init();
 
 	// lv_example_btn_1();
-	
-	
-	
 }
 

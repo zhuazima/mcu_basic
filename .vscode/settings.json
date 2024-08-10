@@ -6,6 +6,10 @@
         "lvgl.h": "c",
         "hal_led.h": "c",
         "hal_oled.h": "c",
-        "lv_port_indev.h": "c"
+        "lv_port_indev.h": "c",
+        "hal_time.h": "c",
+        "stm32f10x.h": "c",
+        "hal_rfd.h": "c",
+        "app.h": "c"
     }
 }
